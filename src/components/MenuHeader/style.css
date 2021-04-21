@@ -1,0 +1,84 @@
+.menu-header {
+  display: none;
+}
+.menu-header > ul {
+  display: flex;
+  padding: 20px 0;
+  /* border: 1px solid black; */
+  list-style-type: none;
+  justify-content: center;
+  background-color: thistle;
+}
+.menu-header > ul > li {
+  position: relative;
+  padding: 0 20px;
+  /* margin: 0 20px; */
+  display: block;
+  /* border: 1px solid black; */
+  border-right: 1px solid white;
+  width: 160px;
+  z-index: 999999;
+}
+.menu-header ul {
+  list-style-type: none;
+}
+.menu-header a {
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+
+.menu-header > ul > li:hover > ul {
+  display: block;
+}
+/* 1st Inner category */
+.menu-header > ul > li > ul {
+  /* border: 1px solid red; */
+  position: absolute;
+  top: 30;
+  left: -1px;
+  background-color: teal;
+  display: none;
+  width: 200px;
+}
+.menu-header > ul > li > ul > li {
+  /* padding: 0 100px 0 20px; */
+  position: relative;
+  /* border: 1px solid white; */
+}
+.menu-header > ul > li > ul > li > a {
+  color: white;
+  padding-left: 20px;
+}
+.menu-header > ul > li > ul > li:hover > ul {
+  display: block;
+  background-color: slateblue;
+}
+
+/* 2nd inner category */
+.menu-header > ul > li > ul > li > ul {
+  display: none;
+  top: 0;
+  left: 200px;
+  position: absolute;
+  z-index: 100;
+}
+.menu-header > ul > li > ul > li > ul > li {
+  padding: 0 50px;
+  background-color: tomato;
+}
+.menu-header > ul > li > ul > li > ul > li > a {
+  color: white;
+}
+.tets {
+  display: flex;
+  position: relative;
+}
+.test a {
+  padding-left: 20px;
+  text-decoration: none;
+}
+.test a svg {
+  position: absolute;
+  left: 150px;
+}

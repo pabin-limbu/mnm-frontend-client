@@ -1,0 +1,34 @@
+/*INAtiLIAZE*/
+.filternav-container {
+  list-style-type: none;
+}
+.filternav-children-container {
+  list-style-type: none;
+}
+.filternav-parentCategory {
+  display: flex;
+  justify-content: space-between;
+}
+
+/*FIRST*/
+
+.filternav-container > li {
+  background-color: tomato;
+}
+.filternav-container > li > a {
+  color: white;
+}
+.filternav-container > li > .filternav-parentCategory > a {
+  color: white;
+}
+
+.filternav-category-list {
+}
+.filternav-category-list > a {
+  color: white;
+}
+
+/*SECOND*/
+.filternav-category-list > .filternav-parentCategory > a {
+  color: white;
+}
