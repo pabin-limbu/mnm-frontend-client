@@ -4,28 +4,46 @@
 .menu-header > ul {
   display: flex;
   padding: 20px 0;
-  /* border: 1px solid black; */
   list-style-type: none;
   justify-content: center;
-  background-color: thistle;
+  background-color: white;
 }
 .menu-header > ul > li {
   position: relative;
   padding: 0 20px;
-  /* margin: 0 20px; */
   display: block;
-  /* border: 1px solid black; */
   border-right: 1px solid white;
   width: 160px;
-  z-index: 999999;
+  z-index: 99;
+  height: 30px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 .menu-header ul {
   list-style-type: none;
 }
-.menu-header a {
+
+.menu-header > ul > li:last-child {
+  border-right: none;
+}
+
+/* remove text decoration */
+.menu-header > ul > li > a {
+  display: inline-block;
+  text-decoration: none;
+  color: black;
+  width: 100%;
+}
+.menu-header > ul > li > div > a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  width: 100%;
+}
+.menu-header > ul > li > ul > li:hover div > a {
   display: block;
   text-decoration: none;
   color: white;
+  width: 100%;
 }
 
 .menu-header > ul > li:hover > ul {
@@ -33,26 +51,61 @@
 }
 /* 1st Inner category */
 .menu-header > ul > li > ul {
-  /* border: 1px solid red; */
   position: absolute;
-  top: 30;
-  left: -1px;
-  background-color: teal;
+  top: 30px;
+  left: -10 px;
+  background-color: white;
   display: none;
   width: 200px;
+  box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.25);
 }
 .menu-header > ul > li > ul > li {
-  /* padding: 0 100px 0 20px; */
+  padding-top: 5px;
+  padding-bottom: 5px;
   position: relative;
-  /* border: 1px solid white; */
+}
+.menu-header.d-lg-block > ul > li > ul > li > a {
+  display: inline-block;
+  width: 100%;
+}
+
+/* pyramid in top of box */
+.menu-header > ul > li > ul::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  border: 13px solid black;
+  top: -26px;
+  left: 25%;
+  transform: translateX(-50%);
+  border-color: transparent transparent white transparent;
+}
+
+.menu-header > ul > li > ul > li > a {
+  color: black;
+  text-decoration: none;
+  width: 100%;
+}
+.menu-header > ul > li > ul > li > div > a {
+  text-decoration: none;
+  color: black;
+  padding-bottom: 5px;
+  width: 100%;
+}
+.menu-header > ul > li > ul > li:hover {
+  background-color: grey;
+}
+.menu-header > ul > li > ul > li:hover > a {
+  color: white;
 }
 .menu-header > ul > li > ul > li > a {
-  color: white;
+  padding-top: 5px;
+  padding-bottom: 5px;
   padding-left: 20px;
+  width: 100%;
 }
 .menu-header > ul > li > ul > li:hover > ul {
   display: block;
-  background-color: slateblue;
 }
 
 /* 2nd inner category */
@@ -62,23 +115,50 @@
   left: 200px;
   position: absolute;
   z-index: 100;
+  width: 200px;
+  background-color: white;
+  box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.25);
 }
+
 .menu-header > ul > li > ul > li > ul > li {
-  padding: 0 50px;
-  background-color: tomato;
+  padding-left: 10px;
+  position: relative;
 }
+
 .menu-header > ul > li > ul > li > ul > li > a {
-  color: white;
+  display: block;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  color: black;
 }
-.tets {
+
+/* 2nd nesting at hover */
+.menu-header > ul > li > ul > li > ul > li:hover {
+  background-color: grey;
+}
+.menu-header > ul > li > ul > li > ul > li:hover a {
+  color: white;
+  text-decoration: none;
+}
+
+.cat-title-with-child {
   display: flex;
   position: relative;
 }
-.test a {
+.cat-title-with-child a {
   padding-left: 20px;
   text-decoration: none;
 }
-.test a svg {
+.cat-title-with-child a svg {
   position: absolute;
   left: 150px;
+}
+
+/* last item align right */
+.menu-header > ul > li:last-child > ul > li > ul {
+  position: absolute;
+  left: -200px;
+}
+.menu-header > ul > li:last-child > ul > li > ul > a {
+  color: black;
 }

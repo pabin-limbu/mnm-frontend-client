@@ -13,3 +13,9 @@ export const categoryConstant = {
 export const productConstaints = {
   GET_PRODUCTS_BY_SLUG: "GET_PRODUCTS_BY_SLUG",
 };
+export const cartConstants = {
+  ADD_TO_CART_REQUEST: "ADD_TO_CART_REQUEST",
+  ADD_TO_CART_SUCCESS: "ADD_TO_CART_SUCCESS",
+  ADD_TO_CART_FAILURE: "ADD_TO_CART_FAILURE",
+  RESTE_CART: "RESET_CART",
+};

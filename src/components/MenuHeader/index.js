@@ -35,20 +35,33 @@ const MenuHeader = () => {
         <li key={category._id}>
           {category.parentId ? (
             category.children.length > 0 ? (
-              <div className="test">
-                <a href={category.slug}>{category.name}</a>
+              <div className="cat-title-with-child d-flex justify-content-between">
+                <a
+                  href={`/${category.slug}?categoryId=${category._id}&type=${category.type}`}
+                >
+                  {category.name}
+                </a>
                 <BsChevronCompactDown onClick={showSubMenu} />
               </div>
             ) : (
-              <a href={category.slug}> {category.name}</a>
+              <a
+                href={`/${category.slug}?categoryId=${category._id}&type=${category.type}`}
+              >
+                {" "}
+                {category.name}
+              </a>
             )
           ) : category.children.length > 0 ? (
-            <div className="test">
+            <div className="cat-title-with-child d-flex justify-content-between">
               <a href={category.slug}>{category.name}</a>
               <BsChevronCompactDown onClick={showSubMenu} />
             </div>
           ) : (
-            <a href={category.slug}>{category.name}</a>
+            <a
+              href={`/${category.slug}?categoryId=${category._id}&type=${category.type}`}
+            >
+              {category.name}
+            </a>
           )}
           {category.children.length > 0 ? (
             <ul>{renderCategories(category.children)}</ul>

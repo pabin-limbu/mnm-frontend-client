@@ -1,3 +1,9 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .sidenav-container {
   height: 100%; /* 100% Full-height */
   width: 0; /* 0 width - change this with JavaScript */
@@ -5,12 +11,12 @@
   z-index: 9; /* Stay on top */
   top: 0; /* Stay at the top */
   left: 0;
-  background-color: cadetblue; /* Black*/
+  background-color: grey; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.2s; /* 0.5 second transition effect to slide in the sidenav */
 }
-.show {
+.sidenav-show{
   width: 250px;
 }
 .sandwhich-btn-container {
@@ -44,108 +50,88 @@
   opacity: 0.35;
   transition: opacity 0.2s ease-in-out 0s;
 }
-/* 1st
-.sidenav-category-list {
-  display: block;
-  padding-top: 1rem;
-}
-.sidenav-category-list a {
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.sidenav-category-list > ul {
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-}
-.sidenav-category-list > ul > li {
-  width: 80%;
-}
-.sidenav-category-list > ul > li > a {
-  padding-left: 1.2rem;
-  color: white;
-}
 
-.sidenav-category-list > ul > li > .test {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  color: white;
-}
-.sidenav-category-list > ul > li > .test > a {
-  color: white;
-}
-
-/*2nd*/
-/* .sidenav-category-list > ul > li > ul {
-  background-color: coral;
-  text-decoration: none;
-  display: none;
-}
-.active {
-  display: block;
-}
-
-.sidenav-category-list > ul > li > ul > li > a {
-  color: white;
-  padding-left: 1.2rem;
-}  */
-
-/*3rd*/
- /* .sidenav-category-list > ul > li > ul > li > ul {
-  display: none;
-}
-.sidenav-category-list > ul > li > ul > li > .test {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.sidenav-category-list > ul > li > ul > li > .test > a {
-  color: white;
-  padding-left: 1.2rem;
-}
-.sidenav-category-list > ul > li > ul > li > .test > svg {
-  color: white;
-}
-
-.sidenav-category-list > ul > li > ul > li > ul > li > a {
-  color: white;
-  padding-left: 1.2rem;
-}  */
-
-/*INITIALIZE*/
+/* init */
 .sidenav-list-container {
-  background-color: white;
+  background-color: grey;
 }
-.subnav-list-title {
-  background-color: salmon;
-}
-a {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-/*AFTER EFFECT*/
-.sidenav .active {
-  display: block !important;
-  background-color: teal;
+.collapsible {
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
 }
 
-/*FIRST*/
+.arrow-icon {
+  pointer-events: none;
+}
+
+.btn-close-sideNav {
+  color: white;
+  font-weight: bolder;
+  position: absolute;
+  right: 32px;
+  top: 8px;
+  cursor: pointer;
+}
+/* custom padding for catlist- items */
+.sidenav-list-container > li {
+  padding-left: 11px;
+  padding-right: 14px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid grey;
+  padding-top: 5px;
+}
+.collapsable-container {
+  width: 100%;
+  list-style-type: none;
+}
+.collapsable-container > li {
+  padding-left: 11px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid grey;
+}
+/* font size declaration */
 .sidenav-list-container > li > a {
-  color: red;
+  color: white;
+  font-size: 1.05rem;
+  padding-bottom: 5px;
 }
-.sidenav-list-container > li > ul {
-  display: none;
+.sidenav-list-container > li > div > a {
+  color: white;
+  font-size: 1.05rem;
 }
-
-/*SECOND*/
-.sidenav-list-container > li > ul > li > ul {
-  display: none;
+.sidenav-list-container > li > ul > li > div > a {
+  color: white;
+  font-size: 1.02rem;
 }
+.sidenav-list-container > li > ul > li > a {
+  color: white;
+  font-size: 1.02rem;
+  padding-bottom: 5px;
+}
+.sidenav-list-container > li > ul > li > ul > li > a {
+  color: white;
+  font-size: 1rem;
+}
+/* remove border from last child */
+.sidenav-list-container > li:last-child {
+  border: none;
+}
+.sidenav-list-container > li > ul > li:last-child {
+  border: none;
+}
+.sidenav-list-container > li > ul > li > ul > li:last-child {
+  border: none;
+}
+.sidenav-list-container > li a {
+  text-decoration: none;
+  cursor: pointer;
+}
+/* remove underline from all links */
 
 @media (max-width: 576px) {
 }

@@ -1,0 +1,8 @@
+.banner-img {
+  object-fit: scale-down;
+  width: 100%;
+  height: auto;
+}
+.slick-arrow {
+  background-color: red;
+}

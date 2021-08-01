@@ -15,3 +15,15 @@ export const getproductBySlug = (slug) => {
     }
   };
 };
+export const getProductPage = (payload) => {
+  return async (dispatch) => {
+    const { categoryId, type } = payload;
+    const res = await axiosInstance.get(`/page/${categoryId}/${type}`);
+    if (res.status === 200) {
+      console.log({ res });
+    } else {
+      console.log("nothing found");
+      //error handlling
+    }
+  };
+};

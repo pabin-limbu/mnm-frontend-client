@@ -1,7 +1,31 @@
 /* // Extra small devices (portrait phones, less than 576px)
 // No media query for `xs` since this is the default in Bootstrap
-
 // Small devices (landscape phones, 576px and up) */
+
+.product-panel-overlay.active {
+  background: #000;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  min-height: 100vh;
+  opacity: 0.35;
+  transition: opacity 0.2s ease-in-out 0s;
+}
+.aside-filter-nav {
+  border: 1px solid grey;
+  margin: 0;
+  padding: 5px;
+}
+
+.btn-quick-view {
+  width: 100%;
+}
+
+
+
 @media (max-width: 576px) {
   .aside-filter-nav {
     background-color: aqua;
@@ -10,7 +34,6 @@
 }
 @media (min-width: 576px) {
   .aside-filter-nav {
-    background-color: aqua;
     display: none;
   }
 }
