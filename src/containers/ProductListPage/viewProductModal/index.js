@@ -19,12 +19,11 @@ function ViewProductModal(props) {
   const [quantity, setQuantity] = useState(0);
   const { show, handleClose, product, size } = props;
   const dispatch = useDispatch();
-  console.log(product);
 
   useEffect(() => {
     setTotalPrice(product.price * quantity);
     return () => {
-      console.log("cleaning up");
+     // console.log("cleaning up");
       setTotalPrice(null);
     };
   }, [quantity]);

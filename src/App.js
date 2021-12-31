@@ -7,6 +7,9 @@ import { Helmet } from "react-helmet";
 import { useEffect } from "react";
 import { updateCart } from "./store/actions/cart.actions";
 import { useDispatch } from "react-redux";
+import { getInitialData } from "./store/actions/initialdata.actions";
+import CheckOutPage from "./containers/CheckOutPage";
+import TestPage from "./components/TestPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -14,6 +17,10 @@ function App() {
     dispatch(updateCart());
 
     return () => {};
+  }, []);
+
+  useEffect(() => {
+    dispatch(getInitialData());
   }, []);
 
   return (
@@ -25,8 +32,11 @@ function App() {
             </Helmet> */}
       <Router>
         <Switch>
+        
           <Route path="/" exact component={HomePage}></Route>
           <Route path="/cart" component={CartPage}></Route>
+          <Route path="/checkout" component={CheckOutPage}></Route>
+          {/* <Route path="/testpage" component={TestPage}></Route>{" "} */}
           <Route path="/:slug" component={ProductListPage}></Route>
         </Switch>
       </Router>

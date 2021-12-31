@@ -1,8 +1,123 @@
-.banner-img {
+.banner-container {
+  margin-top: 20px;
+  padding: 0;
+}
+.banner-container .img-container {
+  width: 100% !important;
+  display: none;
+  overflow: hidden;
+  position: relative;
+}
+img {
+  overflow: hidden;
+  object-fit: contain;
+}
+.slick-slider {
+  z-index: 1;
+}
+.banner-slider > .slick-prev {
+  position: absolute;
+  left: 5px;
+  z-index: 1;
+}
+.banner-slider > .slick-prev::before {
+  position: relative;
+  left: 0px;
+  font-size: 30px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.banner-slider > .slick-next {
+  position: absolute;
+  right: 5px;
+  z-index: 1;
+}
+.banner-slider > .slick-next::before {
+  position: relative;
+  right: 5px;
+  font-size: 30px;
+
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.banner-slider > .slick-next:focus::before {
+  display: inherit;
+}
+
+.banner-container > .slick-slider:hover .slick-next::before,
+.banner-container > .slick-slider:hover .slick-prev::before {
+  opacity: 1;
+}
+.banner-container > .slick-slide {
+  max-height: 100px;
+}
+.slick-slide img {
+  max-height: 100px;
+  width: auto;
   object-fit: scale-down;
-  width: 100%;
-  height: auto;
 }
-.slick-arrow {
-  background-color: red;
+/* 
+.banner-container > .slick-slide {
+  height: 100px;
 }
+
+.slick-slide img {
+  height: 100px;
+  width: auto;
+  object-fit: scale-down;
+} */
+/* // X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  /* .banner-container > .slick-slide {
+    height: 100px;
+  }
+  .slick-slide img {
+    height: 100px;
+    width: auto;
+    object-fit: scale-down;
+  } */
+}
+
+/* // Small devices (landscape phones, less than 768px) */
+@media (min-width: 767.98px) {
+  .banner-container > .slick-slide {
+    max-height: 200px;
+  }
+  .slick-slide img {
+    max-height: 200px;
+    width: auto;
+    object-fit: scale-down;
+  }
+}
+
+/* // Medium devices (tablets, less than 992px) */
+@media (min-width: 991.98px) {
+  .banner-container > .slick-slide {
+    max-height: 300px;
+  }
+  .slick-slide img {
+    max-height: 300px;
+    width: auto;
+    object-fit: scale-down;
+  }
+}
+
+/* // Large devices (desktops, less than 1200px) */
+@media (min-width: 1199.98px) {
+  .banner-container > .slick-slide {
+    max-height: 400px;
+  }
+  .slick-slide img {
+    max-height: 400px;
+    width: auto;
+    object-fit: scale-down;
+  }
+}
+/*  */
+/* // X-Large devices (large desktops, less than 1400px) */
+@media (max-width: 1399.98px) {
+}
+
+/* // XX-Large devices (larger desktops) */
+/* // No media query since the xxl breakpoint has no upper bound on its width */

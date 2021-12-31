@@ -13,7 +13,7 @@ const MenuHeader = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllCategory());
-    dispatch(getAllCategoryList());
+    //dispatch(getAllCategoryList());
   }, []);
 
   const category = useSelector((state) => state.category);
@@ -52,7 +52,7 @@ const MenuHeader = () => {
               </a>
             )
           ) : category.children.length > 0 ? (
-            <div className="cat-title-with-child d-flex justify-content-between">
+            <div className="cat-title-with-child d-flex justify-content-between ">
               <a href={category.slug}>{category.name}</a>
               <BsChevronCompactDown onClick={showSubMenu} />
             </div>
@@ -72,12 +72,12 @@ const MenuHeader = () => {
     return categoryList;
   };
   /**RENDER CATEGORY END */
-
+  // d-flex justify-content-start  justify-content-md-center flex-wrap-reverse
   return (
-    <Container className="menu-header-container d-flex justify-content-start  justify-content-md-center ">
+    <Container fluid className="menu-header-container pr-0">
       <SideNavbar categories={category} />
-      <div className="menu-header d-lg-block">
-        <ul>
+      <div className="menu-header d-lg-block ">
+        <ul className="d-flex flex-wrap justify-content-end  align-content-center ">
           {category.categories.length > 0
             ? renderCategories(category.categories)
             : null}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Collapse, Container, Form } from "react-bootstrap";
 import { BsList, BsSearch } from "react-icons/bs";
 import { BsChevronCompactDown } from "react-icons/bs";
+import { IoMdMenu } from "react-icons/io";
 import { useSelector } from "react-redux";
 import "./style.css";
 
@@ -132,7 +133,7 @@ const SideNavBar = () => {
 
   return (
     <div className="sidenavbarcontainer d-lg-none">
-      <div className="sandwhich-btn-container">
+      <div className="sandwhich-btn-container ">
         <button
           className="btn-sandwhichmenu"
           onClick={() => {
@@ -140,14 +141,8 @@ const SideNavBar = () => {
             setPanelOverlayActive("active");
           }}
         >
-          <BsList></BsList>
+          <IoMdMenu size="2em"></IoMdMenu>
         </button>
-        <div className="searc-bar d-flex">
-          <Form.Control type="text" width="sm" placeholder="..." />
-          <button className="btn search-btn">
-            <BsSearch></BsSearch>
-          </button>
-        </div>
       </div>
 
       <div

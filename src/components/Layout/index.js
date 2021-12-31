@@ -1,14 +1,13 @@
 import React from "react";
 import Footer from "../Footer";
 import Header from "../Header";
-import MenuHeader from "../MenuHeader";
 
 const Layout = (props) => {
-  //console.log("layout");
+  // console.log(props);
   return (
     <>
-      <Header></Header>
-      <MenuHeader />
+      <Header {...props}></Header>
+
       {props.children}
       <Footer />
     </>

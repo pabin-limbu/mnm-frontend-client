@@ -6,14 +6,14 @@ import "./style.css";
 
 const Footer = () => {
   const categories = useSelector((state) => state.category.categories);
-  console.log(categories);
+  //console.log(categories);
 
   const renderParentCategoryname = (categoryList) => {
     return (
       <ul>
         {categoryList.map((category) => {
           return (
-            <li>
+            <li key={category._id}>
               <a href={category.slug}>{category.name}</a>{" "}
             </li>
           );
@@ -57,7 +57,9 @@ const Footer = () => {
           </ul>
         </Col>
         <Col xs={12}>
-          <p  className="h5" style={{ display: "block" }}>Contact us</p>
+          <p className="h5" style={{ display: "block" }}>
+            Contact us
+          </p>
           <ul>
             <li>Email: midnightmadira@gmail.com </li>
             <li>Phone: 9840058472 | 9807909791 | 9807909792</li>

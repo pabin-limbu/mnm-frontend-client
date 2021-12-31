@@ -3,6 +3,7 @@ import { categoryConstant } from "../actions/constants";
 const initState = {
   categoriesList: [],
   categories: [],
+  featuredcategories: [],
   loading: false,
   error: null,
   test: "",
@@ -57,6 +58,12 @@ const buildNewCategory = (parentId, categories, category) => {
   return myCategories; //treversig list.
 };
 
+const filterFeaturedCategories = (categories) => {
+  const featuredCategories = categories.filter((cat) => cat.isfeatured == true);
+
+  return featuredCategories;
+};
+
 export default (state = initState, action) => {
   switch (action.type) {
     case categoryConstant.GET_ALL_CATEGORY_SUCCESS:
@@ -79,7 +86,7 @@ export default (state = initState, action) => {
         state.categories,
         catrgory
       );
-      console.log(updatedCategories);
+      //console.log(updatedCategories);
       state = {
         ...state,
         categories: updatedCategories,
@@ -91,7 +98,11 @@ export default (state = initState, action) => {
       break;
 
     case categoryConstant.GET_ALL_CATEGORYLIST_SUCCESS:
-      state = { ...state, categoriesList: action.payload.categories };
+      state = {
+        ...state,
+        categoriesList: action.payload.categories,
+        featuredcategories: filterFeaturedCategories(action.payload.categories),
+      };
   }
   return state;
 };

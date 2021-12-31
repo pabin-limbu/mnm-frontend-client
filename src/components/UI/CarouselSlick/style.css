@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.carousel-slider > .slick-prev {
+  position: absolute;
+  left: 5px;
+  top: 90px;
+  z-index: 1;
+}
+
+.carousel-slider > .slick-prev::before {
+  position: relative;
+  left: -5px;
+  font-size: 40px;
+
+  color: grey;
+}
+.carousel-slider > .slick-next {
+  position: absolute;
+  right: 5px;
+  top: 90px;
+  z-index: 1;
+}
+.carousel-slider > .slick-next::before {
+  position: relative;
+  right: 15px;
+  font-size: 40px;
+  color: grey;
+}
+.carousel-title-name {
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+}

@@ -1,22 +1,24 @@
 .menu-header {
   display: none;
+  /* background: rgba(255, 255, 255, 0.9); */
 }
 .menu-header > ul {
   display: flex;
   padding: 20px 0;
   list-style-type: none;
   justify-content: center;
-  background-color: white;
+  background: rgba(255, 255, 255, 0.4);
 }
 .menu-header > ul > li {
   position: relative;
   padding: 0 20px;
+  margin-bottom: 5px;
   display: block;
   border-right: 1px solid white;
   width: 160px;
-  z-index: 99;
   height: 30px;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 .menu-header ul {
   list-style-type: none;
@@ -32,12 +34,16 @@
   text-decoration: none;
   color: black;
   width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .menu-header > ul > li > div > a {
   display: block;
   text-decoration: none;
   color: black;
   width: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .menu-header > ul > li > ul > li:hover div > a {
   display: block;
@@ -51,18 +57,21 @@
 }
 /* 1st Inner category */
 .menu-header > ul > li > ul {
+  display: none;
   position: absolute;
   top: 30px;
-  left: -10 px;
+  left: -10px;
   background-color: white;
-  display: none;
   width: 200px;
+  padding-left: 0;
+  z-index: 99;
   box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.25);
 }
 .menu-header > ul > li > ul > li {
   padding-top: 5px;
   padding-bottom: 5px;
   position: relative;
+  background-color: white;
 }
 .menu-header.d-lg-block > ul > li > ul > li > a {
   display: inline-block;
@@ -114,9 +123,10 @@
   top: 0;
   left: 200px;
   position: absolute;
-  z-index: 100;
+  z-index: 9999;
   width: 200px;
   background-color: white;
+  padding-left: 0;
   box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.25);
 }
 
@@ -130,6 +140,7 @@
   padding-top: 5px;
   padding-bottom: 5px;
   color: black;
+  text-decoration: none;
 }
 
 /* 2nd nesting at hover */
@@ -138,7 +149,6 @@
 }
 .menu-header > ul > li > ul > li > ul > li:hover a {
   color: white;
-  text-decoration: none;
 }
 
 .cat-title-with-child {
@@ -146,7 +156,7 @@
   position: relative;
 }
 .cat-title-with-child a {
-  padding-left: 20px;
+  padding-left: 0px;
   text-decoration: none;
 }
 .cat-title-with-child a svg {
@@ -161,4 +171,10 @@
 }
 .menu-header > ul > li:last-child > ul > li > ul > a {
   color: black;
+}
+dl,
+ol,
+ul {
+  margin-top: 0;
+  margin-bottom: 0 !important;
 }

@@ -1,0 +1,70 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+.btn-quickView-container {
+  height: 0;
+  position: relative;
+  background-color: red;
+}
+.card {
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  border: none !important;
+}
+.card:hover {
+  border: 1px solid grey !important;
+}
+.card > .btn-quickView-container > .btn-quickView {
+  width: 100%;
+  transition: all;
+  transition-duration: 400ms;
+  color: white;
+}
+
+.card > .btn-quickView-container > .btn-quickView:active {
+  color: red;
+}
+
+.card:hover .btn-quickView {
+  position: absolute;
+  transform: translate(0, -33px);
+}
+
+.card .card-body {
+  padding: 10px;
+  z-index: 0;
+  background-color: white;
+  font-size: 10px;
+}
+.card .card-body .card-title {
+  font-size: 14px;
+  height: 44.15px;
+}
+.btn-addToCart {
+  width: 90%;
+}
+
+/* // X-Small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+}

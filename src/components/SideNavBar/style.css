@@ -16,25 +16,20 @@
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.2s; /* 0.5 second transition effect to slide in the sidenav */
 }
-.sidenav-show{
+.sidenav-show {
   width: 250px;
 }
 .sandwhich-btn-container {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .btn-sandwhichmenu {
-  display: block;
-  border-radius: 5px;
-  padding-right: 10px;
-  padding-left: 10px;
-  margin-left: 10px;
+  border: none;
+  /* margin: 10px 0; */
 }
-.search-btn {
-  border: 1px solid grey;
-}
+
 .panel-overlay {
   opacity: 0;
 }

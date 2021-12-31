@@ -1,6 +1,89 @@
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 .brand-logo-mnm {
   max-width: 180px;
 }
+nav.main-header {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  box-sizing: border-box;
+}
+.main-header a {
+  color: black;
+  padding: 0 5px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  font-size: 13px;
+}
+.btn-search {
+  padding-left: 5px;
+}
+
+nav.logo-header {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.cart-count-container {
+  min-width: 50px;
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 40px;
+}
+.cart-count-container p {
+  padding-top: 5px;
+  color: white;
+}
+p {
+  display: block;
+}
+.header-menu-wrapper.sticky {
+  position: fixed;
+  left: 0;
+  top: 0;
+  padding-top: 2px;
+  width: 100%;
+  z-index: 9;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* cart with badge */
+.cartbadge-container {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circlediv {
+  width: 17px;
+  height: 15px;
+  border: 3px solid;
+  position: relative;
+  border-radius: 50px;
+  top: -17px;
+}
+.squarediv {
+  width: 2.2em;
+  height: 2.2em;
+  border: 3px solid;
+  position: absolute;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* cart with badge */
 
 /* // X-Small devices (portrait phones, less than 576px)
 // No media query for `xs` since this is the default in Bootstrap */

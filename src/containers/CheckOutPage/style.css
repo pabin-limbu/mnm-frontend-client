@@ -1,0 +1,51 @@
+.checkout-brand-logo-container {
+  height: 100px;
+}
+
+.order-placement-control {
+  height: 100px;
+}
+.login-confirm {
+  height: 50px;
+}
+.checkout-controls-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.accordion-body {
+  border-top: 1px solid;
+}
+.checkout-paymentlist-item {
+  border: none;
+  background-color: white;
+}
+.input-group-text {
+  background-color: white;
+  border: none;
+}
+.order-placement-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.order-placement-control ul {
+  list-style-type: none;
+  text-decoration: none;
+}
+.order-placement-control ul li {
+  display: inline;
+  padding: 0 20px;
+}
+.order-placement-control ul li a {
+  text-decoration: none;
+}
+.oreder-summary-container {
+  background-color: white;
+}
+
+/* address container */
+.add-address-container {
+  background-color: white;
+}
+/* address container end */

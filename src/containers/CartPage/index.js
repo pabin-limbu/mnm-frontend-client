@@ -6,10 +6,10 @@ import { Row, Col, Button, Form, Container } from "react-bootstrap";
 
 import "./style.css";
 
-function CartPage() {
+function CartPage(props) {
   const [allCartItems, setAllCartItems] = useState();
   const cartItems = useSelector((state) => state.cart);
-
+  const [fname, setFname] = useState("");
   useEffect(() => {
     const items = cartItems.cartItems;
     setAllCartItems(items);
@@ -36,7 +36,7 @@ function CartPage() {
 
   return (
     <Layout>
-      <div className="test-123">
+      <div className="">
         <p>INFO SECTION</p>
       </div>
       <Container>
@@ -45,14 +45,16 @@ function CartPage() {
             <div>
               {allCartItems &&
                 Object.keys(allCartItems).map((key) => {
-                  return (
-                    <CartCard
-                      key={key}
-                      item={allCartItems[key]}
-                      incrementCartItem={incrementCartItem}
-                      decrementCartItem={decrementCartItem}
-                    ></CartCard>
-                  );
+                  {
+                    return (
+                      <CartCard
+                        key={key}
+                        item={allCartItems[key]}
+                        incrementCartItem={incrementCartItem}
+                        decrementCartItem={decrementCartItem}
+                      ></CartCard>
+                    );
+                  }
                 })}
             </div>
             <Row>
@@ -62,7 +64,6 @@ function CartPage() {
                   size="sm"
                   className=""
                   onClick={showItemsInCart}
-                  block
                 >
                   Continue shopping
                 </Button>
@@ -72,7 +73,6 @@ function CartPage() {
                   variant="info"
                   size="sm"
                   className=""
-                  block
                   onClick={showItemsInCart}
                 >
                   update cart
@@ -80,6 +80,7 @@ function CartPage() {
               </Col>
             </Row>
           </Col>
+          {/* ok */}
           <Col sm={4}>
             <div className="cart-summary-sticky">
               <Row>
@@ -107,7 +108,9 @@ function CartPage() {
                     variant="dark"
                     size="sm"
                     className=""
-                    block
+                    onClick={() => {
+                      props.history.push("./checkout");
+                    }}
                   >
                     Proceed Checkout
                   </Button>
@@ -121,7 +124,6 @@ function CartPage() {
                     variant="warning"
                     size="sm"
                     className=""
-                    block
                   >
                     Apply coupon
                   </Button>
@@ -131,6 +133,11 @@ function CartPage() {
           </Col>
         </Row>
       </Container>
+
+      <div>
+        <input name="address" onClick={() => setFname("p")} type="radio" />
+        <input name="address" onClick={() => setFname("p")} type="radio" />
+      </div>
     </Layout>
   );
 }

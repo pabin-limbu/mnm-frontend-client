@@ -2,6 +2,21 @@
 // No media query for `xs` since this is the default in Bootstrap
 // Small devices (landscape phones, 576px and up) */
 
+.nav-breadcrumb-container {
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 10vh;
+}
+.breadcrumb {
+  background-color: transparent;
+  display: inline-block;
+}
+.breadcrumb > span > a {
+  color: white;
+}
+.divider {
+  color: white;
+}
+
 .product-panel-overlay.active {
   background: #000;
   position: fixed;
@@ -19,12 +34,59 @@
   margin: 0;
   padding: 5px;
 }
+.product-page-btn-qickview-container {
+  position: relative;
+  background-color: red;
+  height: 0;
+}
 
 .btn-quick-view {
   width: 100%;
+  transition: transform 400ms;
+}
+.card:hover .btn-quick-view {
+  color: white;
+  transform: translate(0, -33px);
+}
+.card-text {
+  text-align: center;
+  height: 37px;
+  margin-top: 10px;
+}
+.card-text-price {
+  font-size: 14px;
+}
+.btn-addtocart {
+  width: 90%;
 }
 
-
+.dropdown {
+  align-items: center;
+  justify-content: center;
+}
+.dropdown-toggle {
+  background: transparent;
+  border-radius: 20px;
+  width: 200px;
+  padding: 10 50px;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 1px 1px 10px 0.2px black;
+}
+.dropdown-toggle:hover {
+  background-color: transparent;
+}
+.dropdown-toggle:focus {
+  background-color: transparent;
+  box-shadow: 1px 1px 10px 0.2px black;
+}
+.dropdown-item {
+}
+.dropdown-item.active {
+  background-color: gray !important;
+}
+.dropdown-item:focus {
+  background-color: gray;
+}
 
 @media (max-width: 576px) {
   .aside-filter-nav {

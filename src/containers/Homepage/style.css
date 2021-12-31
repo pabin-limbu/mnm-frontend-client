@@ -1,0 +1,21 @@
+/* .slick-next {
+}
+.slick-next :hover {
+  color: brown;
+}
+.slick-prev:before,
+.slick-next:before {
+display: none;
+}
+.slick-slide:hover {
+  background-color: burlywood;
+}
+.div1:hover .div3 {
+  background-color: burlywood;
+}
+.div1:hover .div2 {
+  background-color: cadetblue;
+}
+.container:hover button::before {
+  display: block;
+} */

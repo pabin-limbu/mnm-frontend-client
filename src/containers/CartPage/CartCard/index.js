@@ -1,14 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { generatePublicUrl } from "../../../urlConfig";
-import {
-  Card,
-  Button,
-  Col,
-  Row,
-  InputGroup,
-  FormControl,
-  Form,
-} from "react-bootstrap";
+import { Card, Button, Col, Row, InputGroup, Form } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
 function CartCard(props) {
@@ -60,37 +52,34 @@ function CartCard(props) {
 
           <Col className="item-quantity-control" xs={4}>
             <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon1"
-                  onClick={() => {
-                    decrementCartItem(item);
-                  }}
-                  size="sm"
-                >
-                  -
-                </Button>
-              </InputGroup.Prepend>
+              <Button
+                variant="outline-secondary"
+                id="button-addon1"
+                onClick={() => {
+                  decrementCartItem(item);
+                }}
+                size="sm"
+              >
+                -
+              </Button>
 
               <Form.Control
                 size="sm"
                 type="text"
                 readOnly
                 value={itemQuantity}
+                style={{ textAlign: "center" }}
               />
-              <InputGroup.Append>
-                <Button
-                  variant="outline-secondary"
-                  id="button-addon2"
-                  onClick={() => {
-                    incrementCartItem(item);
-                  }}
-                  size="sm"
-                >
-                  +
-                </Button>
-              </InputGroup.Append>
+              <Button
+                variant="outline-secondary"
+                id="button-addon2"
+                onClick={() => {
+                  incrementCartItem(item);
+                }}
+                size="sm"
+              >
+                +
+              </Button>
             </InputGroup>
           </Col>
         </Row>

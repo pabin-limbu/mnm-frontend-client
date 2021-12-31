@@ -8,7 +8,7 @@ const initState = {
 export default (state = initState, action) => {
   switch (action.type) {
     case cartConstants.ADD_TO_CART_REQUEST:
-      console.log("Hi");
+     // console.log("Hi");
       state = {
         ...state,
         updatingCart: true,

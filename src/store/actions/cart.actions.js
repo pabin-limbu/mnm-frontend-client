@@ -16,7 +16,7 @@ export const addToCart = (product, newQty = 0) => {
 
     dispatch({ type: cartConstants.ADD_TO_CART_REQUEST });
     localStorage.setItem("cart", JSON.stringify(cartItems));
-    console.log(cartItems);
+    //console.log(cartItems);
     dispatch({
       type: cartConstants.ADD_TO_CART_SUCCESS,
       payload: { cartItems },
