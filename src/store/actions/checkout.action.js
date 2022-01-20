@@ -28,7 +28,7 @@ export const addAddress = (address) => {
 export const updateAddress = (address) => {
   return async (dispatch) => {
     console.log("update address");
-    console.log({ address });
+
 
     // update local storage address and update redux store address
     const localStorageAddress = localStorage.getItem("userAddress");

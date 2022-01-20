@@ -1,3 +1,8 @@
 .addressform-container {
-  padding: 5px 5px;
+  border: 1px solid grey;
+
+  background-color: white;
+}
+.addreform-title {
+  background-color: darkgray;
 }

@@ -9,7 +9,7 @@ import {
 import { nanoid } from "nanoid";
 import "./style.css";
 
-function AddressForm({ setAddnewaddress, addr }) {
+function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
   const [name, setName] = useState(addr ? addr.name : "");
   const [mobileNumber, setMobileNumber] = useState(
     addr ? addr.mobileNumber : ""
@@ -36,15 +36,18 @@ function AddressForm({ setAddnewaddress, addr }) {
       cityDistrictTown,
       landmark,
       alternatePhoneNumber,
-      selected: false,
+      selected: true,
       edit: false,
     };
     //if addr then update else add
     if (!addr) {
       dispatch(addAddress(userAddress));
       setAddnewaddress(false);
-    } else {
+    }
+    if (addr) {
+      console.log("hello");
       dispatch(updateAddress(userAddress));
+      //NOTE: the edit form will close because the edit option in user address is been set to false.
     }
 
     // reset feilds.
@@ -59,8 +62,20 @@ function AddressForm({ setAddnewaddress, addr }) {
     // localStorage.setItem("userAddress", JSON.stringify(userAddress));
   };
 
+  const handleCancelAddress = () => {
+    if (!addr) {
+      setAddnewaddress(false);
+    }
+    if (addr) {
+      handleEditAddressCancel(addr);
+    }
+  };
+
   return (
     <div className="addressform-container">
+      <div className="addreform-title d-flex  justify-content-center align-items-center mt-2">
+        Delivery Address Form
+      </div>
       <MaterialInput
         label="Name"
         value={name}
@@ -105,7 +120,7 @@ function AddressForm({ setAddnewaddress, addr }) {
       </Button>
       <Button
         onClick={() => {
-          setAddnewaddress(false);
+          handleCancelAddress();
         }}
       >
         Cancel

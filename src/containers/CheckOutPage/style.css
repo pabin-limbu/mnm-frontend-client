@@ -40,12 +40,40 @@
 .order-placement-control ul li a {
   text-decoration: none;
 }
-.oreder-summary-container {
+/* .oreder-summary-container {
   background-color: white;
-}
+} */
 
 /* address container */
-.add-address-container {
+/* .add-address-container {
   background-color: white;
-}
+} */
 /* address container end */
+
+/* /////////////////// */
+
+/* display address container */
+.delevery-address {
+  /* border: 1px solid red; */
+  border-radius: 5px;
+  padding: 2px;
+}
+/* each address container */
+.addresscontainer {
+  background-color: blanchedalmond;
+  margin-top: 2px;
+
+}
+.checkoutstep-title {
+  font-size: large;
+  font-weight: bold;
+}
+
+/* no delivery zone */
+.placenotdelivered{
+  background-color: lightgray;
+  display: block;
+  align-items: center;
+  padding: 5px;
+  margin-bottom: 1px;
+}

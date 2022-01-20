@@ -5,21 +5,20 @@ import "./style.css";
 const MaterialInput = (props) => {
   return (
     <div className="materialinput-container">
-      <Row
-        style={{
-          background: "green",
-        }}
-      >
-        <Col style={{ display: "flex", justifyContent: "space-between" }}>
-          <Form.Label style={{ width: "250px", height: "50px" }}>
-            {props.label}
-          </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            value={props.value}
-            onChange={props.onChange}
-          />
+      <Row>
+        <Col xs={12}>
+          <div className=" ps-2 materialinput-label d-flex justify-content-start align-items-center ">
+            <Form.Label> {props.label}</Form.Label>
+          </div>
+        </Col>
+        <Col xs={12}>
+          <div className="ps-2 pe-2">
+            <Form.Control
+              type="text"
+              value={props.value}
+              onChange={props.onChange}
+            />
+          </div>
         </Col>
       </Row>
     </div>

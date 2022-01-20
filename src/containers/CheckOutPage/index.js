@@ -12,6 +12,7 @@ import {
   useAccordionButton,
   InputGroup,
   FormControl,
+  Alert,
 } from "react-bootstrap";
 
 import DeliveryAddressForm from "../../components/DeliveryAddressForm";
@@ -20,11 +21,13 @@ import PaymentForm from "../../components/PaymentForm";
 import "./style.css";
 import AddressForm from "../../components/UI/AddressForm";
 import { populateUserAdress, deleteAddress } from "../../store/actions";
+import { addOrder } from "../../store/actions";
 
-function CustomToggle({ children, value, eventKey }) {
-  const decoratedOnClick = useAccordionButton(eventKey, (e) =>
-    console.log(e.target.value)
-  );
+function CustomToggle({ children, value, eventKey, setPayment }) {
+  const decoratedOnClick = useAccordionButton(eventKey, (e) => {
+    console.log(e.target.value);
+    setPayment(e.target.value);
+  });
 
   return (
     <InputGroup>
@@ -50,8 +53,8 @@ const CheckoutStep = (props) => {
         onClick={props.onClick}
         className={`checkoutHeader ${props.active && "active"}`}
       >
-        <div>
-          <span className="stepNumber">{props.stepNumber}</span>
+        <div className="checkoutstep-title mt-2 mb-2">
+          <span className="stepNumber">{props.stepNumber} </span>
           <span className="stepTitle">{props.title}</span>
         </div>
       </div>
@@ -69,62 +72,95 @@ const Address = ({
   handleEditAddress,
   address,
   setAddress,
+  setAddnewaddress,
+  handleEditAddressCancel,
 }) => {
   return (
     <div className="addresscontainer">
-      <div>
-        <input
-          name="address"
-          onClick={() => selectAddress(addr)}
-          type="radio"
-        />
-      </div>
-      {!addr.edit ? (
-        <div>
+      <Row>
+        <Col xs={1} className={addr.edit ? "d-none" : ""}>
           {" "}
-          <div className="addressDetail">
-            <div>
-              <span className="addressName">{addr.name}</span>
-              <span className="addressType">{addr.addressType}</span>
-              <span className="addressMobileNumber">{addr.mobileNumber}</span>
-            </div>
-            {addr.selected && (
-              <Button
-                onClick={() => {
-                  handleEditAddress(addr, address, setAddress);
-                }}
-              >
-                edit
-              </Button>
-            )}
-            {addr.selected && (
-              <Button
-                onClick={() => {
-                  onDeleteAddress(addr);
-                }}
-              >
-                Delete
-              </Button>
-            )}
+          <div className="ps-2 d-flex justify-content-center align-items-center h-100">
+            <input
+              name="address"
+              onClick={() => selectAddress(addr)}
+              type="radio"
+            />
           </div>
-          <div className="fullAddress">
-            {addr.address} <br /> {`${addr.locality} - ${addr.mobileNumber}`}
-          </div>
-          {addr.selected && (
-            <Button
-              onClick={() => confirmDeliveryAddress(addr)}
-              style={{
-                width: "200px",
-                margin: "10px 0",
-              }}
-            >
-              Deliver Here
-            </Button>
+        </Col>
+        <Col xs={addr.edit ? 12 : 11}>
+          {!addr.edit ? (
+            <Row className="">
+              <Col xs={6}>
+                <div>
+                  <span className="addressName">{addr.name}</span>
+                  <span className="addressType">{addr.addressType}</span>
+                  <span className="addressMobileNumber">
+                    {addr.mobileNumber}
+                  </span>
+                </div>
+                <div className="fullAddress">
+                  {addr.address} <br />{" "}
+                  {`${addr.locality} - ${addr.mobileNumber}`}
+                </div>
+              </Col>
+              <Col xs={6}>
+                <Row>
+                  <Col>
+                    <div className="d-flex justify-content-end align-items-center h-100">
+                      {addr.selected && (
+                        <Button
+                          className=" mt-2 "
+                          size="sm"
+                          variant="warning"
+                          onClick={() => {
+                            handleEditAddress(addr, address, setAddress);
+                          }}
+                        >
+                          edit
+                        </Button>
+                      )}
+                      {addr.selected && (
+                        <Button
+                          className=" mt-2 ms-2"
+                          size="sm"
+                          variant="danger"
+                          onClick={() => {
+                            onDeleteAddress(addr);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  </Col>
+                  <Col>
+                    <div className="d-flex justify-content-end align-items-center mt-2 pe-1">
+                      {addr.selected && (
+                        <Button
+                          variant="success"
+                          onClick={() => confirmDeliveryAddress(addr)}
+                          size="sm"
+                        >
+                          Deliver Here
+                        </Button>
+                      )}
+                    </div>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          ) : (
+            <AddressForm
+              address={address}
+              setAddress={setAddress}
+              addr={addr}
+              setAddnewaddress={setAddnewaddress}
+              handleEditAddressCancel={handleEditAddressCancel}
+            />
           )}
-        </div>
-      ) : (
-        <AddressForm address={address} setAddress={setAddress} addr={addr} />
-      )}
+        </Col>
+      </Row>
     </div>
   );
 };
@@ -133,7 +169,7 @@ function CheckOutPage() {
   // ordersummary states lifting state up.
   const [allCartItems, setAllCartItems] = useState("");
   const [subTotal, setSubTotal] = useState(0);
-  const cartItems = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   //check out page states
 
@@ -144,17 +180,19 @@ function CheckOutPage() {
   const [email, setEmail] = useState("");
   const [addnewaddress, setAddnewaddress] = useState(false);
   const [ageConfirmation, setAgeConfirmation] = useState(false);
+  const [payment, setPayment] = useState("cash");
   //address state
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [confirmAddress, setConfirmAddress] = useState(false);
+  const [test, setTest] = useState(true);
 
   //fetch all user address from redux.
   const userAddresses = useSelector((state) => state.checkout.useraddress);
 
   useEffect(() => {
-    const items = cartItems.cartItems;
+    const items = cart.cartItems;
     setAllCartItems(items);
-  }, [cartItems]);
+  }, [cart]);
 
   useEffect(() => {
     if (Object.keys(allCartItems).length > 0) {
@@ -165,7 +203,6 @@ function CheckOutPage() {
   }, [allCartItems]);
 
   useEffect(() => {
-    console.log("populating user address");
     dispatch(populateUserAdress());
   }, []);
 
@@ -173,6 +210,7 @@ function CheckOutPage() {
     setAddress(userAddresses);
   }, [userAddresses]);
 
+  //item subtotal.
   function calculateSubTotal(allCartItems) {
     // console.log(allCartItems);
     let totalsum = 0;
@@ -185,9 +223,9 @@ function CheckOutPage() {
     setSubTotal(totalsum);
   }
 
+  //on address radio select
   const selectAddress = (addr) => {
     //when user select address then show butotns .
-    console.log(addr);
     const updatedAddress = address.map((adr) =>
       //select address should be matched with id.
       adr.id === addr.id
@@ -198,11 +236,13 @@ function CheckOutPage() {
     setAddress(updatedAddress);
   };
 
+  //select delivery address
   const confirmDeliveryAddress = (addr) => {
     setSelectedAddress(addr);
     setConfirmAddress(true);
   };
 
+  //delete address
   const onDeleteAddress = (addr) => {
     // console.log("delete address clicked", addr);
     dispatch(deleteAddress(addr));
@@ -216,15 +256,47 @@ function CheckOutPage() {
     );
     setAddress(updatedAddress);
   };
+
+  //edit address cancel
+  const handleEditAddressCancel = (addr) => {
+    //if addr means the edit value of selected address is true which we have to make false while cancel edit.
+    if (addr) {
+      const updatedAddress = address.map((adr) =>
+        adr.id === addr.id ? { ...adr, edit: false } : { ...adr }
+      );
+      setAddress(updatedAddress);
+    }
+  };
+
   //submit checkout
   const handleCheckoutSubmit = () => {
     console.log("submit checkout");
-    let order = {};
-    
-  };
+    const totalAmount = Object.keys(cart.cartItems).reduce(
+      (totalPrice, key) => {
+        const { price, qty } = cart.cartItems[key];
+        return totalPrice + price * qty;
+      },
+      0
+    );
 
-  //logs
-  console.log(ageConfirmation);
+    const items = Object.keys(cart.cartItems).map((key) => ({
+      productId: key,
+      payablePrice: cart.cartItems[key].price,
+      purchasedQty: cart.cartItems[key].qty,
+    }));
+
+    const payload = {
+      name: selectedAddress.name,
+      selectedAddress,
+      totalAmount,
+      cartItems: items,
+      ageConfirmation,
+      paymentStatus: "pending",
+      payment,
+    };
+
+    dispatch(addOrder(payload));
+  };
 
   return (
     <div>
@@ -233,6 +305,7 @@ function CheckOutPage() {
         className="checkout-brand-logo-container "
         style={{ height: "auto" }}
       >
+        {/* brand name */}
         <Row>
           <Col className="d-flex justify-content-center align-items-center bg-dark p-4">
             <Navbar bg="dark" variant="dark">
@@ -249,7 +322,10 @@ function CheckOutPage() {
             </Navbar>
           </Col>
         </Row>
-        <Row>
+
+        {/* Checkout steps navs */}
+
+        <Row className="d-none">
           <Col>
             <Container>
               <div className="order-placement-control ">
@@ -269,24 +345,36 @@ function CheckOutPage() {
           </Col>
         </Row>
       </Container>
-      <Container className="bg-secondary">
+      {/* user info logs */}
+      <Container>
         <Row>
-          <Col className="oreder-details">
+          <Col className="ask-customer-login mt-2" sm={12}>
+            <div>
+              {" "}
+              <Alert variant="success">
+                Are you a new customer ?
+                <Alert.Link href="#"> login </Alert.Link>
+                feature will be available soon.
+              </Alert>
+            </div>
+          </Col>
+          <Col sm={12}>
+            <div>
+              <Alert variant="info"> Order Has been successfully made.</Alert>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+
+      {/* check out step */}
+      <Container className="">
+        <Row>
+          <Col sm={12} className="oreder-details">
             <Row>
               <Col sm={12}>
-                <div className="login-confirm">
+                <div>
                   <CheckoutStep
                     stepNumber={"1"}
-                    title={"LOGIN"}
-                    active={false}
-                    body={<div>login user</div>}
-                  />
-                </div>
-              </Col>
-              <Col sm={12}>
-                <div className="delevery-address">
-                  <CheckoutStep
-                    stepNumber={"2"}
                     title={"DELIVERY ADDRESS"}
                     active={!confirmAddress}
                     body={
@@ -294,20 +382,28 @@ function CheckOutPage() {
                         {confirmAddress ? (
                           <div className="stepCompleted">{`${selectedAddress.name} ${selectedAddress.address} ${selectedAddress.locality} ${selectedAddress.mobileNumber}  `}</div>
                         ) : address && address.length > 0 ? (
-                          address.map((addr) => {
-                            return (
-                              <Address
-                                addr={addr}
-                                key={addr.id}
-                                selectAddress={selectAddress}
-                                confirmDeliveryAddress={confirmDeliveryAddress}
-                                onDeleteAddress={onDeleteAddress}
-                                handleEditAddress={handleEditAddress}
-                                setAddress={setAddress}
-                                address={address}
-                              />
-                            );
-                          })
+                          <div className="delevery-address">
+                            {address.map((addr) => {
+                              return (
+                                <Address
+                                  addr={addr}
+                                  key={addr.id}
+                                  selectAddress={selectAddress}
+                                  confirmDeliveryAddress={
+                                    confirmDeliveryAddress
+                                  }
+                                  onDeleteAddress={onDeleteAddress}
+                                  handleEditAddress={handleEditAddress}
+                                  setAddress={setAddress}
+                                  address={address}
+                                  setAddnewaddress={setAddnewaddress}
+                                  handleEditAddressCancel={
+                                    handleEditAddressCancel
+                                  }
+                                />
+                              );
+                            })}
+                          </div>
                         ) : null}
                       </>
                     }
@@ -321,21 +417,18 @@ function CheckOutPage() {
                       <AddressForm setAddnewaddress={setAddnewaddress} />
                     </div>
                   ) : (
-                    <CheckoutStep
-                      stepNumber={"+"}
-                      title={"ADD NEW ADDRESS"}
-                      active={false}
+                    <Button
+                      size="sm"
+                      variant="outline-dark"
+                      className="add-address-button mt-3 mb-4"
                       onClick={() => {
                         setAddnewaddress(!addnewaddress);
                       }}
-                    />
+                    >
+                      + Add new address
+                    </Button>
                   )}
                 </div>
-              </Col>
-
-              <Col>
-                <div>place we dont deliver</div>
-                <div>place we charge extra for deliver</div>
               </Col>
             </Row>
 
@@ -343,19 +436,31 @@ function CheckOutPage() {
               <h5>Payment Method</h5>
               <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
-                  <CustomToggle eventKey="0" value="cash">
+                  <CustomToggle
+                    setPayment={setPayment}
+                    eventKey="0"
+                    value="cash"
+                  >
                     Cash on delivery
                   </CustomToggle>
                   <Accordion.Body>cash on delivery</Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="1">
-                  <CustomToggle eventKey="1" value="card">
+                  <CustomToggle
+                    setPayment={setPayment}
+                    eventKey="1"
+                    value="card"
+                  >
                     card on delivery
                   </CustomToggle>
                   <Accordion.Body>Pay By card on delivery</Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="2">
-                  <CustomToggle eventKey="2" value="esewa">
+                  <CustomToggle
+                    setPayment={setPayment}
+                    eventKey="2"
+                    value="esewa"
+                  >
                     Esewa
                   </CustomToggle>
                   <Accordion.Body>Esewa</Accordion.Body>
@@ -374,7 +479,7 @@ function CheckOutPage() {
                     }
                   }}
                   type="checkbox"
-                  label="I confirm that I am eighteen (18) years of age or older. I have read and agree to the website terms and conditions *"
+                  label="I confirm that I am eighteen (18) years of age or older. I have read and agree to the MIDNIGHT MADIRA website terms and conditions *"
                 />
               </Form.Group>
             </div>
@@ -390,7 +495,19 @@ function CheckOutPage() {
               </Button>
             </div>
           </Col>
-          <Col className="oreder-summary">
+
+          <Col>
+            <div className="placenotdelivered">
+              <h5>Place we dont deliver</h5>
+              <p>1. Outside Jhapa, morang</p>
+              <p>2. Outside of mechi border</p>
+            </div>
+            <div className="placenotdelivered">
+              <h5>place we charge extra for deliver</h5>
+              <p>1. Outside birtamode , sanishare , charali</p>
+            </div>
+          </Col>
+          <Col className="oreder-summary d-none">
             <div className="oreder-summary-container">
               <OrderSummary
                 setAllCartItems={setAllCartItems}
