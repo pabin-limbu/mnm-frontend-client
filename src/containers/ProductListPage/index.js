@@ -23,6 +23,7 @@ const ProductListPage = (props) => {
       setCurrentProducts(product.featuredProduct);
     }
     if (props.match.params.slug !== "featured") {
+      console.log("prop name " + props.match.params.slug);
       dispatch(getproductBySlug(props.match.params.slug));
     }
   }, [props.match.params.slug]);

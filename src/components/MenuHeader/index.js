@@ -16,6 +16,7 @@ const MenuHeader = () => {
   }, []);
 
   const category = useSelector((state) => state.category);
+  console.log(category);
 
   const showNavBar = () => {
     setShowNav(true);
