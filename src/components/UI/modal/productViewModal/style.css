@@ -1,0 +1,23 @@
+.productmodal-name {
+  font-weight: bold;
+  font-size: large;
+  text-transform: capitalize;
+}
+.productmodal-stock {
+  font-size: small;
+  font-weight: bold;
+  color: #CC0000;
+}
+
+.quantitySelectionArea {
+  display: flex;
+  justify-content: space-between;
+}
+.addtocartbtn-container button {
+  border-radius: 0;
+  background-color: #00695c;
+  border: 0;
+}
+.addtocartbtn-container button:hover {
+  background-color: #2bbbad;
+}

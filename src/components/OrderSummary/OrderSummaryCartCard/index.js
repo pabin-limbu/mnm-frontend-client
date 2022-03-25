@@ -24,7 +24,7 @@ function OrderSummaryCartCard(props) {
       <Card.Body>
         <Row>
           <Col xs={4}>
-            <span>
+            <span className={`${props.viewOnly && "d-none"}`}>
               <IoIosCloseCircleOutline
                 size={23}
                 style={{ position: "absolute", top: "-5px", left: "1px" }}
@@ -39,18 +39,21 @@ function OrderSummaryCartCard(props) {
             />
           </Col>
 
-          <Col xs={4}>
+          <Col xs={props.viewOnly ? 8 : 4}>
             <Row>
-              <Col xs={12}>
+              <Col xs={props.viewOnly ? 6 : 12}>
                 <Card.Text>{item.name}</Card.Text>
               </Col>
-              <Col xs={12}>
+              <Col xs={props.viewOnly ? 6 : 12}>
                 <Card.Text>{`RS ${item.price}`}</Card.Text>
               </Col>
             </Row>
           </Col>
 
-          <Col className="item-quantity-control" xs={4}>
+          <Col
+            className={`item-quantity-control ${props.viewOnly && "d-none"}`}
+            xs={4}
+          >
             <InputGroup className="mb-3">
               <Button
                 variant="outline-secondary"

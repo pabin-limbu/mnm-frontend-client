@@ -8,7 +8,7 @@
   overflow: hidden;
   position: relative;
 }
-img {
+.banner-slider img {
   overflow: hidden;
   object-fit: contain;
 }
@@ -52,7 +52,7 @@ img {
 .banner-container > .slick-slide {
   max-height: 100px;
 }
-.slick-slide img {
+.banner-slider .slick-slide img {
   max-height: 100px;
   width: auto;
   object-fit: scale-down;
@@ -84,7 +84,7 @@ img {
   .banner-container > .slick-slide {
     max-height: 200px;
   }
-  .slick-slide img {
+  .banner-slider .slick-slide img {
     max-height: 200px;
     width: auto;
     object-fit: scale-down;
@@ -96,7 +96,7 @@ img {
   .banner-container > .slick-slide {
     max-height: 300px;
   }
-  .slick-slide img {
+  .banner-slider .slick-slide img {
     max-height: 300px;
     width: auto;
     object-fit: scale-down;
@@ -108,7 +108,7 @@ img {
   .banner-container > .slick-slide {
     max-height: 400px;
   }
-  .slick-slide img {
+  .banner-slider .slick-slide img {
     max-height: 400px;
     width: auto;
     object-fit: scale-down;

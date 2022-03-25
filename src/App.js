@@ -9,7 +9,7 @@ import { updateCart } from "./store/actions/cart.actions";
 import { useDispatch } from "react-redux";
 import { getInitialData } from "./store/actions/initialdata.actions";
 import CheckOutPage from "./containers/CheckOutPage";
-import TestPage from "./components/TestPage";
+import ProductDetailsPage from "./containers/PrdouctDetailsPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,19 +25,17 @@ function App() {
 
   return (
     <div className="App">
-      {/* <Helmet>
-                <meta charSet="utf-8" />
-                <title>My Title</title>
-               
-            </Helmet> */}
       <Router>
         <Switch>
-        
           <Route path="/" exact component={HomePage}></Route>
           <Route path="/cart" component={CartPage}></Route>
           <Route path="/checkout" component={CheckOutPage}></Route>
-          {/* <Route path="/testpage" component={TestPage}></Route>{" "} */}
-          <Route path="/:slug" component={ProductListPage}></Route>
+          <Route
+            path="/:slug/:id/"
+            exact
+            component={ProductDetailsPage}
+          ></Route>
+          <Route path="/:slug" exact component={ProductListPage}></Route>
         </Switch>
       </Router>
     </div>

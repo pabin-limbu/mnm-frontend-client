@@ -5,6 +5,8 @@ import productReducer from "./product.reducers";
 import cartReducers from "./cart.reducers";
 import checkoutReducers from "./checkout.reducers";
 import orderReducers from "./order.reducers";
+import bannerReducers from "./banner.reducers";
+import commentReducers from "./comment.reducers";
 
 const rootReducer = combineReducers({
   category: categoryRecucer,
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
   cart: cartReducers,
   checkout: checkoutReducers,
   order: orderReducers,
+  banner: bannerReducers,
+  comment: commentReducers,
 });
 
 export default rootReducer;

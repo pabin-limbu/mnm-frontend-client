@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./style.css";
 import {
   Modal,
   Button,
@@ -14,36 +13,39 @@ import {
 import { generatePublicUrl } from "../../../../urlConfig";
 import { addToCart } from "../../../../store/actions/cart.actions";
 import { useDispatch } from "react-redux";
+import "./style.css";
 
 function ProductViewModal(props) {
   const [totalPrice, setTotalPrice] = useState(0);
-  const [quantity, setQuantity] = useState(0);
-  const { show, handleClose, product, size } = props;
+  const [orderQuantity, setOrderQuantity] = useState(1);
+  const { show, handleClose, product, size, setShowToast } = props;
   const dispatch = useDispatch();
-  //console.log(product);
 
   useEffect(() => {
-    product && setTotalPrice(product.price * quantity);
-    return () => {
-      console.log("cleaning up");
-      setTotalPrice(null);
-    };
-  }, [quantity]);
+    product && setTotalPrice(product.price * orderQuantity);
+  }, [orderQuantity]);
+
+  // useEffect(() => {
+  //   setQuantity(1);
+  // }, [show]);
 
   const increamentQuantity = () => {
-    setQuantity(quantity + 1);
+    if (orderQuantity >= product.quantity) return;
+    setOrderQuantity(orderQuantity + 1);
   };
   const decrementQuantity = () => {
-    if (quantity == 0) return;
-    setQuantity(quantity - 1);
+    if (orderQuantity === 1) return;
+    setOrderQuantity(orderQuantity - 1);
   };
 
-  const addProductToCart = (product, newQnt = 0) => {
+  const addProductToCart = (product, orderQuantity) => {
     handleClose();
     const { _id, name, price, quantity, productPictures } = product;
     dispatch(
-      addToCart({ _id, name, price, quantity, productPictures }, newQnt)
-    );
+      addToCart({ _id, name, price, quantity, productPictures }, orderQuantity)
+    ).then(() => {
+      setShowToast(true);
+    });
   };
 
   return (
@@ -62,22 +64,43 @@ function ProductViewModal(props) {
                 </Col>
                 <Col>
                   <Row>
-                    <Col sm={12}>{product.name}</Col>
-                    <Col sm={12}>{product.price}</Col>
-                    <Col sm={12}>{product.description}</Col>
                     <Col sm={12}>
-                      <p>size: small</p>
+                      <p className="productmodal-name">
+                        {" "}
+                        {product.name} Lorem ipsum dolor, sit amet consectetur
+                        adipisicing elit. Exercitationem, temporibus!{" "}
+                      </p>
+                    </Col>
+                    <Col sm={12}>
+                      <p>
+                        <del>rs:20</del> <strong>rs:{product.price}</strong>{" "}
+                      </p>
+                    </Col>
+                    <Col sm={12}>
+                      {" "}
+                      <p>
+                        {product.description} Lorem ipsum dolor sit, amet
+                        consectetur adipisicing elit. Quam, sit! Cum, omnis
+                        deleniti? Officiis tenetur officia, voluptates illo
+                        corporis earum?{" "}
+                      </p>{" "}
+                    </Col>
+                    <Col sm={12}>
+                      <p className="productmodal-stock">
+                        item in stock : {product.quantity}
+                      </p>
                     </Col>
                     <Col sm={12}>
                       <Row>
-                        <Col sm={6}>
-                          <p>$ {totalPrice}</p>
+                        <Col sm={9}>
+                          <p>Total price : rs {totalPrice}</p>
                         </Col>
-                        <Col sm={6}>
+                        <Col sm={3}>
                           <a
                             href="#"
-                            onClick={() => {
-                              setQuantity(0);
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setOrderQuantity(1);
                             }}
                           >
                             RESET
@@ -104,7 +127,7 @@ function ProductViewModal(props) {
                                   aria-label="Example text with button addon"
                                   aria-describedby="basic-addon1"
                                   readOnly
-                                  value={quantity}
+                                  value={orderQuantity}
                                 />
                                 <Button
                                   variant="outline-secondary"
@@ -115,10 +138,12 @@ function ProductViewModal(props) {
                                 </Button>
                               </InputGroup>
                             </div>
-                            <div className="btn-addToCart ml-3">
+                            <div className="addtocartbtn-container">
                               <Button
+                                className="btn-addtocart"
+                                
                                 onClick={() => {
-                                  addProductToCart(product, quantity);
+                                  addProductToCart(product, orderQuantity);
                                 }}
                               >
                                 ADD TO CART
@@ -129,14 +154,14 @@ function ProductViewModal(props) {
                       </Row>
                     </Col>
                     <Col sm={12}>
-                      <p>Category and tags</p>
+                      <p>category : {product.category.slug}</p>
+                      {/* <p>{JSON.stringify(product)}</p>
+                      <p>{product.quantity}</p> */}
                     </Col>
                   </Row>
                 </Col>
               </Row>
             </Container>
-
-            {/* {JSON.stringify(product)} */}
           </Modal.Body>
         </Modal>
       )}
@@ -145,3 +170,5 @@ function ProductViewModal(props) {
 }
 
 export default ProductViewModal;
+//NOTE:
+//This is a react bootstrap model component and it has its own overlay.

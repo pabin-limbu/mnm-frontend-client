@@ -4,9 +4,11 @@
   padding: 0;
 }
 .btn-quickView-container {
-  height: 0;
+  height: 0px;
   position: relative;
   background-color: red;
+  display: block;
+  padding: 0px 5px 0px 5px;
 }
 .card {
   margin-left: 2.5px;
@@ -21,15 +23,16 @@
   transition: all;
   transition-duration: 400ms;
   color: white;
+  margin-top: 5px;
 }
 
 .card > .btn-quickView-container > .btn-quickView:active {
-  color: red;
+  font-weight: bolder;
 }
 
 .card:hover .btn-quickView {
-  position: absolute;
-  transform: translate(0, -33px);
+  position: relative;
+  transform: translate(0, -36px);
 }
 
 .card .card-body {
@@ -39,11 +42,42 @@
   font-size: 10px;
 }
 .card .card-body .card-title {
-  font-size: 14px;
-  height: 44.15px;
+  font-size: 13px;
+  height: 54.15px;
+  overflow: hidden;
 }
-.btn-addToCart {
-  width: 90%;
+
+/* buttons */
+.btn-quickView.btn.btn-primary {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.btn-addToCart.btn.btn-primary {
+  background-color: rgba(255, 152, 0, 0.7) !important;
+  border-color: #ffb300 !important;
+  border-radius: 0px;
+  font-weight: bold;
+  width: 100%;
+}
+.card-footer {
+  background-color: white !important;
+  border: none !important;
+}
+.itemcard-link {
+  text-decoration: none;
+  color: black;
+}
+.itemcard-link:hover {
+  color: black;
+}
+
+/* giving size to each name */
+.carditem-categoryname {
+  max-height: 20px;
+}
+.itemcard-price {
+  font-size: small;
 }
 
 /* // X-Small devices (portrait phones, less than 576px)
@@ -55,6 +89,12 @@
 
 /* // Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+  .card h6 a {
+    font-size: larger;
+  }
+  .itemcard-price {
+    font-size: medium;
+  }
 }
 
 /* // Large devices (desktops, 992px and up) */

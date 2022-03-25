@@ -2,19 +2,55 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import { FaFacebookSquare, FaInstagram } from "react-icons/fa";
+import { IoChevronForward } from "react-icons/io5";
+
 import "./style.css";
 
 const Footer = () => {
   const categories = useSelector((state) => state.category.categories);
-  //console.log(categories);
+  const services = ["delivery", "contact us", "enquiry"];
+  const pageInformation = ["about us", "payment method"];
+  const constacts = [
+    "Email: midnightmadira@gmail.com",
+    "Phone: 9840058472 | 9807909791",
+    "Viber/ whatsapp: 9807909791",
+  ];
+  const paymentOptions = [
+    "Cash on Delivery",
+    "Card on Delivery",
+    "Connect IPS",
+    "Esewa",
+    "mobile banking",
+  ];
 
   const renderParentCategoryname = (categoryList) => {
     return (
-      <ul>
+      <ul className="footer-categoryname">
         {categoryList.map((category) => {
           return (
             <li key={category._id}>
-              <a href={category.slug}>{category.name}</a>{" "}
+              <a href={category.slug}>
+                <IoChevronForward className="footer-listarrow"></IoChevronForward>
+                <span className="small-anchor"> {category.name}</span>
+              </a>{" "}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  };
+
+  const renderServices = (services, index) => {
+    return (
+      <ul className="footer-services">
+        {services.map((service, index) => {
+          return (
+            <li key={index}>
+              <a href="#">
+                {" "}
+                <IoChevronForward className="footer-listarrow"></IoChevronForward>
+                <span className="small-anchor">{service}</span>
+              </a>
             </li>
           );
         })}
@@ -23,70 +59,30 @@ const Footer = () => {
   };
 
   return (
-    <Container fluid className="bg-dark text-light">
+    <Container fluid className="footer-container  text-light">
       <Row>
         <Col xs={12}>
-          <p style={{ display: "block" }}>Shop</p>
+          <h5>Shop</h5>
           {renderParentCategoryname(categories)}
         </Col>
         <Col xs={12}>
-          <p style={{ display: "block" }}>Services</p>
-          <ul>
-            <li>
-              <a href="#">Delivery</a>
-            </li>
-            <li>
-              <a href="#">Contact us</a>
-            </li>
-            <li>
-              <a href="#">enquiry</a>
-            </li>
-          </ul>
+          <h5>Services</h5>
+          {renderServices(services)}
         </Col>
         <Col xs={12}>
-          {" "}
-          <p style={{ display: "block" }}>Information</p>
-          <ul>
-            <li>
-              <a href="#">About us</a>
-            </li>
-
-            <li>
-              <a href="#">Payment method</a>
-            </li>
-          </ul>
+          <h5>Information</h5>
+          {renderServices(pageInformation)}
         </Col>
         <Col xs={12}>
-          <p className="h5" style={{ display: "block" }}>
-            Contact us
-          </p>
-          <ul>
-            <li>Email: midnightmadira@gmail.com </li>
-            <li>Phone: 9840058472 | 9807909791 | 9807909792</li>
-            <li>Viber/ whatsapp: 9807909791</li>
-          </ul>
+          <h5>Contact us at</h5>
+          {renderServices(constacts)}
         </Col>
       </Row>
 
       <Row>
         <Col xs={12} className="">
-          <p className="h5">Payment Options</p>
-        </Col>
-        <Col xs={12} className="">
-          cash on delivery
-        </Col>
-        <Col xs={12} className="">
-          {" "}
-          card on delivery{" "}
-        </Col>
-        <Col xs={12} className="">
-          Connect IPS
-        </Col>
-        <Col xs={12} className="">
-          eSewa
-        </Col>
-        <Col xs={12} className="">
-          Mobile banking
+          <h5>Payment Options</h5>
+          {renderServices(paymentOptions)}
         </Col>
       </Row>
       <Row>

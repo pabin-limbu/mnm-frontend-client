@@ -10,6 +10,9 @@ function CarouselSlick(props) {
     products,
     setCurrentProduct,
     setShowProductViewModal,
+    featured,
+    carouselCategorySlug,
+    setShowToast,
   } = props;
 
   var settings = {
@@ -49,40 +52,50 @@ function CarouselSlick(props) {
       },
     ],
   };
+
+  const onHandleViewAll = () => {
+    if (featured) {
+      props.history.push(`/featured`, { state: "pabin" });
+    } else {
+      props.history.push(`/${carouselCategorySlug}`);
+    }
+  };
   return (
     <Container id="carouselSlick">
-      <div>
-        <div className="clearfix mb-2" >
-          <Button
-            size="sm"
-            variant="outline-warning"
-            className="float-right mt-2"
-          >
-            {" "}
-            view all{" "}
-          </Button>
-          <h6 className="float-left mt-4 carousel-title-name">
-            {" "}
-            {carouselCategoryname}{" "}
-          </h6>
-        </div>
-
-        <Slider className="carousel-slider" {...settings}>
-          {products.length >= 0
-            ? products.map((item) => {
-                return (
-                  <div key={item._id} style={{ width: "226 px" }}>
-                    <ItemCards
-                      setShowProductViewModal={setShowProductViewModal}
-                      setCurrentProduct={setCurrentProduct}
-                      item={item}
-                    ></ItemCards>
-                  </div>
-                );
-              })
-            : null}
-        </Slider>
+      <div className="d-flex justify-content-between mt-4">
+        <h4 className="d-block carousel-title-name">
+          {" "}
+          {carouselCategoryname}{" "}
+        </h4>
+        <Button
+          size="sm"
+          variant="outline-warning"
+          className="d-block"
+          onClick={() => {
+            onHandleViewAll();
+          }}
+        >
+          {" "}
+          view all{" "}
+        </Button>
       </div>
+
+      <Slider className="carousel-slider" {...settings}>
+        {products.length >= 0
+          ? products.map((item) => {
+              return (
+                <div key={item._id} style={{ width: "226 px" }}>
+                  <ItemCards
+                    setShowProductViewModal={setShowProductViewModal}
+                    setCurrentProduct={setCurrentProduct}
+                    item={item}
+                    setShowToast={setShowToast}
+                  ></ItemCards>
+                </div>
+              );
+            })
+          : null}
+      </Slider>
     </Container>
   );
 }

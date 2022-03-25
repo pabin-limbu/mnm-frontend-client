@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { MaterialInput } from "../MateralUi";
+import { MaterialInput } from "../UI/MateralUi";
 import { Button, Col, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import {
-  addAddress,
-  updateAddress,
-} from "../../../store/actions/checkout.action";
+import { addAddress, updateAddress } from "../../store/actions";
 import { nanoid } from "nanoid";
 import "./style.css";
 
@@ -73,8 +70,8 @@ function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
 
   return (
     <div className="addressform-container">
-      <div className="addreform-title d-flex  justify-content-center align-items-center mt-2">
-        Delivery Address Form
+      <div className="addreform-title d-flex  justify-content-center align-items-center pt-2">
+        <p>Delivery Address </p>
       </div>
       <MaterialInput
         label="Name"
@@ -111,20 +108,27 @@ function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
         value={alternatePhoneNumber}
         onChange={(e) => setAternatePhoneNumber(e.target.value)}
       ></MaterialInput>
-      <Button
-        onClick={() => {
-          submimtAddress(addr ? addr : null);
-        }}
-      >
-        Save
-      </Button>
-      <Button
-        onClick={() => {
-          handleCancelAddress();
-        }}
-      >
-        Cancel
-      </Button>
+
+      <div className="addressformbutton-container mt-2 mb-4 ">
+        <Button
+          size="sm ms-2 me-4 ps-4 pe-4"
+          variant="success"
+          onClick={() => {
+            submimtAddress(addr ? addr : null);
+          }}
+        >
+          Save
+        </Button>
+        <Button
+          size="sm ps-4 pe-4"
+          variant="outline-info"
+          onClick={() => {
+            handleCancelAddress();
+          }}
+        >
+          Cancel
+        </Button>
+      </div>
     </div>
   );
 }

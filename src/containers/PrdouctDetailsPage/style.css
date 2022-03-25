@@ -1,0 +1,17 @@
+.productdetail-imgcontainer {
+  background-color: blueviolet;
+  width: 100%;
+}
+.productdetail-imgcontainer img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.product-details-quantity {
+
+  width: 50%;
+}
+.productdetails-btnaddtocart {
+  margin-left: 20px;
+  border-radius: 0;
+}

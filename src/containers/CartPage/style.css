@@ -10,6 +10,24 @@ img {
   vertical-align: middle;
   object-fit: contain;
 } */
-.item-quantity-control{
-padding-right: 5px;
+.item-quantity-control {
+  padding-right: 5px;
+}
+.cartpage-alert-container .alert {
+  padding: 5px 0 5px 10px;
+}
+.cartpage-alert-container .btn-close {
+  padding: 5px;
+}
+.btn-updatecart {
+  border-radius: 0;
+  width: 100%;
+}
+.btn-continueShopping {
+  border-radius: 0;
+  width: 100%;
+}
+.btn-proceedcheckout {
+  border-radius: 0;
+  width: 100%;
 }

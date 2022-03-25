@@ -9,6 +9,10 @@
   height: 50px;
 }
 .checkout-controls-btn-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -62,7 +66,6 @@
 .addresscontainer {
   background-color: blanchedalmond;
   margin-top: 2px;
-
 }
 .checkoutstep-title {
   font-size: large;
@@ -70,10 +73,75 @@
 }
 
 /* no delivery zone */
-.placenotdelivered{
+.placenotdelivered {
   background-color: lightgray;
   display: block;
   align-items: center;
   padding: 5px;
   margin-bottom: 1px;
+}
+
+/* final address selected */
+.finaladdress {
+  background-color: lightgrey;
+  padding-left: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+/* checkout step container */
+.checkoutStep {
+  display: none;
+}
+.checkoutStep.active {
+  display: block;
+}
+/* checkoutbutton controls  */
+
+.checkoutbtnback {
+  font-size: small;
+  border-radius: 0;
+}
+.checkoutbtnnext {
+  border-radius: 0;
+  font-size: small;
+  font-weight: bold;
+}
+
+/* final address show close button */
+.finaladdressclose {
+  color: white;
+  position: absolute;
+  right: 10px;
+  font-weight: bold;
+  top: 0;
+  cursor: pointer;
+}
+
+/* // Small devices (landscape phones, 576px and up) */
+@media only screen and (min-width: 576px) {
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .checkout-controls-btn-container {
+    position: relative;
+    display: flex;
+    align-items: center;  
+    justify-content: space-between;
+  }
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media only screen and (min-width: 1400px) {
 }

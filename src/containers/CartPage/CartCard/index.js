@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import { generatePublicUrl } from "../../../urlConfig";
 import { Card, Button, Col, Row, InputGroup, Form } from "react-bootstrap";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { removeCartItem } from "../../../store/actions";
+import "./style.css";
 
 function CartCard(props) {
   const [itemQuantity, setItemQuantity] = useState(0);
   const item = props.item;
   const { incrementCartItem, decrementCartItem } = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setItemQuantity(item.qty);
@@ -24,11 +28,13 @@ function CartCard(props) {
       <Card.Body>
         <Row>
           <Col xs={4}>
-            <span>
-              <IoIosCloseCircleOutline
-                size={23}
-                style={{ position: "absolute", top: "-5px", left: "1px" }}
-              />
+            <span
+              className="cart-card-close"
+              onClick={() => {
+                dispatch(removeCartItem(props.item));
+              }}
+            >
+              <IoIosCloseCircleOutline size={23} />
             </span>
             <Card.Img
               variant="top"

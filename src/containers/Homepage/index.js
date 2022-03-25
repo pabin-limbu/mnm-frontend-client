@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Banner from "../../components/UI/banner";
-import ItemCards from "../../components/UI/Cards/ItemCards";
+
 import CarouselSlick from "../../components/UI/CarouselSlick";
 import { useSelector } from "react-redux";
 import ProductViewModal from "../../components/UI/modal/productViewModal";
-import axiosInstance from "../../helpers/axios";
+
 import { getFeaturedProductByCategory } from "../../store/actions";
 import { useDispatch } from "react-redux";
-import Slider from "react-slick";
+
 import "./style.css";
-import { Container } from "react-bootstrap";
+
 import ProductCollage from "../../components/UI/ProdutcCollage";
+import CommentCarouusel from "../../components/UI/CommentCarousel";
+import Toastmessage from "../../components/UI/ToastMessage";
 
 const HomePage = (props) => {
   const [currentProduct, setCurrentProduct] = useState(null);
   const [showProductViewModal, setShowProductViewModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const dispatch = useDispatch();
   const featuredProduct = useSelector((state) => state.product.featuredProduct);
   const featuredCategory = useSelector(
@@ -24,6 +27,9 @@ const HomePage = (props) => {
   const featuredCategoryWithProduct = useSelector(
     (state) => state.product.featuredCategoryWithProduct
   );
+
+  const bannerList = useSelector((state) => state.banner.banners);
+  const commentList = useSelector((state) => state.comment.comments);
 
   const handleClose = () => {
     setShowProductViewModal(false);
@@ -43,17 +49,27 @@ const HomePage = (props) => {
   };
 
   // console.log(props);
-
+  const toggleShowToast = () => setShowToast(!showToast);
   return (
     <div style={{}}>
       <Layout {...props}>
-        <Banner></Banner>
+        <Toastmessage
+          show={showToast}
+          onClose={toggleShowToast}
+          delay={2000}
+        ></Toastmessage>
+
+        {/* Product banner */}
+        <Banner bannerList={bannerList}></Banner>
 
         <CarouselSlick
+          featured
+          {...props}
           products={featuredProduct}
           setShowProductViewModal={setShowProductViewModal}
           carouselCategoryname={"featured Products"}
           setCurrentProduct={setCurrentProduct}
+          setShowToast={setShowToast}
         ></CarouselSlick>
 
         {/* //featured categories */}
@@ -61,48 +77,27 @@ const HomePage = (props) => {
           featuredCategoryWithProduct.map((category) => {
             return (
               <ProductCollage
+                {...props}
                 key={category.name}
                 products={category.product}
                 setShowProductViewModal={setShowProductViewModal}
                 carouselCategoryname={category.name}
+                carouselCategorySlug={category.slug}
                 setCurrentProduct={setCurrentProduct}
+                setShowToast={setShowToast}
               ></ProductCollage>
             );
           })}
-
-        {/* <CarouselSlick
-                products={category.product}
-                setShowProductViewModal={setShowProductViewModal}
-                carouselCategoryname={category.name}
-                setCurrentProduct={setCurrentProduct}
-              ></CarouselSlick> */}
 
         <ProductViewModal
           product={currentProduct}
           show={showProductViewModal}
           handleClose={handleClose}
           size={"lg"}
+          setShowToast={setShowToast}
         ></ProductViewModal>
-        <button
-          onClick={() => {
-            //  console.log(currentProduct);
-          }}
-        >
-          show
-        </button>
-        {/* <button
-          onClick={async () => {
-            let result = await axiosInstance.post(
-              "/products/productsbycategoryid",
-              {
-                featuredCategory,
-              }
-            );
-            //console.log(result);
-          }}
-        >
-          TEST API
-        </button> */}
+
+        <CommentCarouusel commentList={commentList}></CommentCarouusel>
       </Layout>
     </div>
   );

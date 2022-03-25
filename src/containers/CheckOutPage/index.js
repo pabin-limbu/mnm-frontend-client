@@ -8,20 +8,17 @@ import {
   Button,
   Form,
   Accordion,
-  Card,
   useAccordionButton,
   InputGroup,
-  FormControl,
   Alert,
 } from "react-bootstrap";
 
-import DeliveryAddressForm from "../../components/DeliveryAddressForm";
 import OrderSummary from "../../components/OrderSummary";
-import PaymentForm from "../../components/PaymentForm";
-import "./style.css";
-import AddressForm from "../../components/UI/AddressForm";
+import AddressForm from "../../components/AddressForm";
 import { populateUserAdress, deleteAddress } from "../../store/actions";
 import { addOrder } from "../../store/actions";
+import "./style.css";
+import ErrorAlert from "../../components/UI/ErrorAlert";
 
 function CustomToggle({ children, value, eventKey, setPayment }) {
   const decoratedOnClick = useAccordionButton(eventKey, (e) => {
@@ -48,16 +45,17 @@ function CustomToggle({ children, value, eventKey, setPayment }) {
 //checkout steps
 const CheckoutStep = (props) => {
   return (
-    <div className="checkoutStep">
-      <div
-        onClick={props.onClick}
-        className={`checkoutHeader ${props.active && "active"}`}
-      >
-        <div className="checkoutstep-title mt-2 mb-2">
-          <span className="stepNumber">{props.stepNumber} </span>
-          <span className="stepTitle">{props.title}</span>
-        </div>
+    <div
+      className={`checkoutStep ${
+        props.currentStep == props.stepNumber ? "active" : ""
+      }`}
+    >
+      <div className="checkoutstep-title mt-2 mb-2">
+        <span className="stepNumber">{props.stepNumber} </span>
+        <span className="stepTitle">{props.title}</span>
+        <span className="stepTitle">{props.currentStep}</span>
       </div>
+
       {props.body && props.body}
     </div>
   );
@@ -165,26 +163,26 @@ const Address = ({
   );
 };
 
-function CheckOutPage() {
+function CheckOutPage(props) {
   // ordersummary states lifting state up.
   const [allCartItems, setAllCartItems] = useState("");
   const [subTotal, setSubTotal] = useState(0);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   //check out page states
-
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
   const [address, setAddress] = useState([]);
-  const [foneNumber, setFoneNumber] = useState("");
-  const [email, setEmail] = useState("");
   const [addnewaddress, setAddnewaddress] = useState(false);
   const [ageConfirmation, setAgeConfirmation] = useState(false);
   const [payment, setPayment] = useState("cash");
+  const [showAlert, setShowAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   //address state
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [confirmAddress, setConfirmAddress] = useState(false);
-  const [test, setTest] = useState(true);
+  //payment state
+  const [confirmPayment, setConfirmPayment] = useState(false);
+  //order steps state.
+  const [currentStep, setCurrentStep] = useState(1);
 
   //fetch all user address from redux.
   const userAddresses = useSelector((state) => state.checkout.useraddress);
@@ -194,6 +192,7 @@ function CheckOutPage() {
     setAllCartItems(items);
   }, [cart]);
 
+  //set item subtotal.
   useEffect(() => {
     if (Object.keys(allCartItems).length > 0) {
       calculateSubTotal(allCartItems);
@@ -270,32 +269,68 @@ function CheckOutPage() {
 
   //submit checkout
   const handleCheckoutSubmit = () => {
-    console.log("submit checkout");
-    const totalAmount = Object.keys(cart.cartItems).reduce(
-      (totalPrice, key) => {
-        const { price, qty } = cart.cartItems[key];
-        return totalPrice + price * qty;
-      },
-      0
-    );
+    //check address selected
+    switch (currentStep) {
+      case 1:
+        if (confirmAddress) {
+          setShowAlert(false);
+          setCurrentStep(2);
+        }
+        if (!confirmAddress) {
+          setErrorMessage("*Select delivery address");
+          setShowAlert(true);
+        }
 
-    const items = Object.keys(cart.cartItems).map((key) => ({
-      productId: key,
-      payablePrice: cart.cartItems[key].price,
-      purchasedQty: cart.cartItems[key].qty,
-    }));
+        break;
+      case 2:
+        console.log("sstep 2 completed");
+        if (!ageConfirmation) {
+          setErrorMessage("* You Must agree the terms and condition");
+          setShowAlert(true);
+        }
+        if (ageConfirmation) {
+          // order total amount
+          const totalAmount = Object.keys(cart.cartItems).reduce(
+            (totalPrice, key) => {
+              const { price, qty } = cart.cartItems[key];
+              return totalPrice + price * qty;
+            },
+            0
+          );
+          //order items in array.
+          const items = Object.keys(cart.cartItems).map((key) => ({
+            productId: key,
+            payablePrice: cart.cartItems[key].price,
+            purchasedQty: cart.cartItems[key].qty,
+          }));
 
-    const payload = {
-      name: selectedAddress.name,
-      selectedAddress,
-      totalAmount,
-      cartItems: items,
-      ageConfirmation,
-      paymentStatus: "pending",
-      payment,
-    };
+          //order payload.
+          const payload = {
+            name: selectedAddress.name,
+            selectedAddress,
+            totalAmount,
+            cartItems: items,
+            ageConfirmation,
+            paymentStatus: "pending",
+            payment,
+          };
 
-    dispatch(addOrder(payload));
+          dispatch(addOrder(payload));
+        }
+        break;
+    }
+  };
+
+  //Handle checkout back button.
+  const handleCheckoutBack = (props) => {
+    switch (currentStep) {
+      case 1:
+        props.history && props.history.push("/cart");
+        break;
+      case 2:
+        setCurrentStep(1);
+        break;
+    }
   };
 
   return (
@@ -360,7 +395,19 @@ function CheckOutPage() {
           </Col>
           <Col sm={12}>
             <div>
-              <Alert variant="info"> Order Has been successfully made.</Alert>
+              <Alert show={false} variant="info">
+                {" "}
+                Order Has been successfully made.
+              </Alert>
+            </div>
+            <div>
+              <ErrorAlert
+                message={errorMessage}
+                variant={"light"}
+                dismissible={false}
+                show={showAlert}
+                onClose={() => setShowAlert(false)}
+              ></ErrorAlert>
             </div>
           </Col>
         </Row>
@@ -369,18 +416,55 @@ function CheckOutPage() {
       {/* check out step */}
       <Container className="">
         <Row>
+          <Col xs={12}>
+            {/* Order summary accordian */}
+            <Accordion>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>
+                  <p>
+                    Items to Order{" "}
+                    <span
+                      style={{ fontWeight: "bold" }}
+                    >{`RS:${subTotal}`}</span>
+                  </p>
+                </Accordion.Header>
+                <Accordion.Body>
+                  <div className="oreder-summary-container">
+                    <OrderSummary
+                      viewOnly
+                      setAllCartItems={setAllCartItems}
+                      allCartItems={allCartItems}
+                      subTotal={subTotal}
+                    ></OrderSummary>
+                  </div>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+          </Col>
           <Col sm={12} className="oreder-details">
             <Row>
               <Col sm={12}>
                 <div>
                   <CheckoutStep
-                    stepNumber={"1"}
+                    currentStep={currentStep}
+                    stepNumber={1}
                     title={"DELIVERY ADDRESS"}
                     active={!confirmAddress}
                     body={
                       <>
                         {confirmAddress ? (
-                          <div className="stepCompleted">{`${selectedAddress.name} ${selectedAddress.address} ${selectedAddress.locality} ${selectedAddress.mobileNumber}  `}</div>
+                          <div className="finaladdress">
+                            <p>{`${selectedAddress.name} ${selectedAddress.address} ${selectedAddress.locality} ${selectedAddress.mobileNumber}  `}</p>
+                            <span
+                              className="finaladdressclose"
+                              onClick={() => {
+                                setConfirmAddress(false);
+                              }}
+                            >
+                              {" "}
+                              X{" "}
+                            </span>
+                          </div>
                         ) : address && address.length > 0 ? (
                           <div className="delevery-address">
                             {address.map((addr) => {
@@ -405,116 +489,154 @@ function CheckOutPage() {
                             })}
                           </div>
                         ) : null}
+
+                        <div className="addnew-deleveryaddress">
+                          {addnewaddress ? (
+                            <div className="add-address-container">
+                              <AddressForm
+                                setAddnewaddress={setAddnewaddress}
+                              />
+                            </div>
+                          ) : (
+                            <Button
+                              size="sm"
+                              variant="outline-dark"
+                              className="add-address-button mt-3 mb-4"
+                              onClick={() => {
+                                setAddnewaddress(!addnewaddress);
+                              }}
+                            >
+                              + Add new address
+                            </Button>
+                          )}
+                        </div>
                       </>
                     }
                   />
                 </div>
               </Col>
-              <Col sm={12}>
-                <div className="addnew-deleveryaddress">
-                  {addnewaddress ? (
-                    <div className="add-address-container">
-                      <AddressForm setAddnewaddress={setAddnewaddress} />
-                    </div>
-                  ) : (
-                    <Button
-                      size="sm"
-                      variant="outline-dark"
-                      className="add-address-button mt-3 mb-4"
-                      onClick={() => {
-                        setAddnewaddress(!addnewaddress);
-                      }}
-                    >
-                      + Add new address
-                    </Button>
-                  )}
+
+              <Col xs={12}>
+                <CheckoutStep
+                  currentStep={currentStep}
+                  stepNumber={2}
+                  title={"PAYMENT METHOD"}
+                  active={!confirmPayment}
+                  body={
+                    <>
+                      <div className="payment-info">
+                        <Accordion defaultActiveKey="0">
+                          <Accordion.Item eventKey="0">
+                            <CustomToggle
+                              setPayment={setPayment}
+                              eventKey="0"
+                              value="cash"
+                            >
+                              Cash On Delivery
+                            </CustomToggle>
+                            <Accordion.Body>
+                              {" "}
+                              Pay cash during the delivery of item.
+                            </Accordion.Body>
+                          </Accordion.Item>
+                          <Accordion.Item eventKey="1">
+                            <CustomToggle
+                              setPayment={setPayment}
+                              eventKey="1"
+                              value="card"
+                            >
+                              card on delivery
+                            </CustomToggle>
+                            <Accordion.Body>
+                              Pay by card during the delivery of item.
+                            </Accordion.Body>
+                          </Accordion.Item>
+                          <Accordion.Item eventKey="2">
+                            <CustomToggle
+                              setPayment={setPayment}
+                              eventKey="2"
+                              value="esewa"
+                            >
+                              Esewa
+                            </CustomToggle>
+                            <Accordion.Body>
+                              Make payment using esewa app.
+                            </Accordion.Body>
+                          </Accordion.Item>
+                        </Accordion>
+                      </div>
+                      <div className="age-confirmation">
+                        <Form.Group
+                          className="mb-3"
+                          controlId="formBasicCheckbox"
+                        >
+                          <Form.Check
+                            onChange={(e) => {
+                              //console.log(e.target.checked);
+                              if (e.target.checked) {
+                                setAgeConfirmation(true);
+                              } else {
+                                setAgeConfirmation(false);
+                              }
+                            }}
+                            type="checkbox"
+                            label="I confirm that I am eighteen (18) years of age or older. I have read and agree to the MIDNIGHT MADIRA website terms and conditions *"
+                          />
+                        </Form.Group>
+                      </div>
+                    </>
+                  }
+                ></CheckoutStep>
+              </Col>
+              <Col xs={12}></Col>
+              <Col xs={12}>
+                <div className={`checkout-controls-btn-container`}>
+                  <Button
+                    className="checkoutbtnback w-50"
+                    size="lg"
+                    variant="secondary"
+                    onClick={() => {
+                      handleCheckoutBack(props);
+                    }}
+                  >
+                    {`${
+                      currentStep == 1
+                        ? "cart"
+                        : currentStep == 2
+                        ? "<< Select Address"
+                        : "continue shopping"
+                    }`}
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="warning"
+                    className="checkoutbtnnext w-50"
+                    onClick={() => {
+                      handleCheckoutSubmit(props);
+                    }}
+                  >
+                    {`${
+                      currentStep == 1
+                        ? "proceed >>"
+                        : currentStep == 2
+                        ? "Confirm Order >>"
+                        : ""
+                    }`}
+                  </Button>
+                </div>
+              </Col>
+              <Col>
+                <div className="placenotdelivered">
+                  <h5>Place we dont deliver</h5>
+                  <p>1. Outside Jhapa, morang</p>
+                  <p>2. Outside of mechi border</p>
+                </div>
+                <div className="placenotdelivered">
+                  <h5>place we charge extra for deliver</h5>
+                  <p>1. Outside birtamode , sanishare , charali</p>
                 </div>
               </Col>
             </Row>
-
-            <div className="payment-info">
-              <h5>Payment Method</h5>
-              <Accordion defaultActiveKey="0">
-                <Accordion.Item eventKey="0">
-                  <CustomToggle
-                    setPayment={setPayment}
-                    eventKey="0"
-                    value="cash"
-                  >
-                    Cash on delivery
-                  </CustomToggle>
-                  <Accordion.Body>cash on delivery</Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="1">
-                  <CustomToggle
-                    setPayment={setPayment}
-                    eventKey="1"
-                    value="card"
-                  >
-                    card on delivery
-                  </CustomToggle>
-                  <Accordion.Body>Pay By card on delivery</Accordion.Body>
-                </Accordion.Item>
-                <Accordion.Item eventKey="2">
-                  <CustomToggle
-                    setPayment={setPayment}
-                    eventKey="2"
-                    value="esewa"
-                  >
-                    Esewa
-                  </CustomToggle>
-                  <Accordion.Body>Esewa</Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-            </div>
-            <div className="age-confirmation">
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check
-                  onChange={(e) => {
-                    //console.log(e.target.checked);
-                    if (e.target.checked) {
-                      setAgeConfirmation(true);
-                    } else {
-                      setAgeConfirmation(false);
-                    }
-                  }}
-                  type="checkbox"
-                  label="I confirm that I am eighteen (18) years of age or older. I have read and agree to the MIDNIGHT MADIRA website terms and conditions *"
-                />
-              </Form.Group>
-            </div>
-
-            <div className="checkout-controls-btn-container">
-              <Button>cart</Button>
-              <Button
-                onClick={() => {
-                  handleCheckoutSubmit();
-                }}
-              >
-                Proceed
-              </Button>
-            </div>
-          </Col>
-
-          <Col>
-            <div className="placenotdelivered">
-              <h5>Place we dont deliver</h5>
-              <p>1. Outside Jhapa, morang</p>
-              <p>2. Outside of mechi border</p>
-            </div>
-            <div className="placenotdelivered">
-              <h5>place we charge extra for deliver</h5>
-              <p>1. Outside birtamode , sanishare , charali</p>
-            </div>
-          </Col>
-          <Col className="oreder-summary d-none">
-            <div className="oreder-summary-container">
-              <OrderSummary
-                setAllCartItems={setAllCartItems}
-                allCartItems={allCartItems}
-                subTotal={subTotal}
-              ></OrderSummary>
-            </div>
           </Col>
         </Row>
       </Container>

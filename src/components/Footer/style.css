@@ -1,4 +1,32 @@
 .footer-container {
   width: 100%;
-  background-color: blueviolet;
+  background-color: rgba(255, 152, 0, 0.7);
+}
+.footer-container h5 {
+  margin-top: 10px;
+  font-weight: bolder;
+}
+
+/* category name list */
+.footer-categoryname {
+  list-style-type: none;
+  padding: 0;
+}
+.footer-categoryname > li > a {
+  text-decoration: none;
+  color: white;
+}
+.footer-listarrow {
+  padding-right: 5px;
+}
+/* footer serice name */
+.footer-services {
+  list-style-type: none;
+  padding: 0;
+}
+.footer-services > li > a {
+  text-decoration: none;
+  color: white;
+}
+.small-anchor {
 }

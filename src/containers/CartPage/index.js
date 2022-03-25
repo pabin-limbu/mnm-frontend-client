@@ -1,26 +1,35 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartCard from "./CartCard";
-import { Row, Col, Button, Form, Container } from "react-bootstrap";
+import { Row, Col, Button, Form, Container, Alert } from "react-bootstrap";
+import { updateCartQuantity } from "../../store/actions";
 
 import "./style.css";
 
 function CartPage(props) {
   const [allCartItems, setAllCartItems] = useState();
   const cartItems = useSelector((state) => state.cart);
-  const [fname, setFname] = useState("");
+  const [show, setShow] = useState(false);
+
+  const dispatch = useDispatch();
   useEffect(() => {
     const items = cartItems.cartItems;
     setAllCartItems(items);
   }, [cartItems]);
 
-  const showItemsInCart = () => {
-    console.log("hi");
+  const handleUpdateCartQuantity = () => {
+    dispatch(updateCartQuantity(allCartItems)).then(() => {
+      setShow(true);
+    });
   };
 
   const incrementCartItem = (item) => {
     const incrementedQty = item.qty + 1;
+    if (incrementedQty >= item.quantity + 1) {
+      console.log("max quantity reahed");
+      return;
+    }
     setAllCartItems({
       ...allCartItems,
       [item._id]: { ...item, qty: incrementedQty },
@@ -28,16 +37,41 @@ function CartPage(props) {
   };
   const decrementCartItem = (item) => {
     const decrementQuantity = item.qty - 1;
+    if (decrementQuantity <= 0) {
+      console.log("min quantity reached");
+      return;
+    }
     setAllCartItems({
       ...allCartItems,
       [item._id]: { ...item, qty: decrementQuantity },
     });
   };
 
+  //item subtotal.
+  function calculateSubTotal(allCartItems) {
+    // console.log(allCartItems);
+    let totalsum = 0;
+    Object.keys(allCartItems).forEach((item, index) => {
+      //item overall price depend on quantity.
+      let itemTotalPriceIncQnt =
+        allCartItems[item].price * allCartItems[item].qty;
+      totalsum = totalsum + itemTotalPriceIncQnt;
+    });
+    // setSubTotal(totalsum);
+    return totalsum;
+  }
+
   return (
     <Layout>
-      <div className="">
-        <p>INFO SECTION</p>
+      <div className="cartpage-alert-container">
+        <Alert
+          variant="success"
+          show={show}
+          onClose={() => setShow(false)}
+          dismissible
+        >
+          <Alert.Heading>cart updated ✓</Alert.Heading>
+        </Alert>
       </div>
       <Container>
         <Row>
@@ -62,18 +96,20 @@ function CartPage(props) {
                 <Button
                   variant="outline-warning"
                   size="sm"
-                  className=""
-                  onClick={showItemsInCart}
+                  className="btn-continueShopping"
+                  onClick={() => {
+                    props.history.push("/");
+                  }}
                 >
-                  Continue shopping
+                  &#8592; Continue shopping
                 </Button>
               </Col>
               <Col xs={5}>
                 <Button
                   variant="info"
                   size="sm"
-                  className=""
-                  onClick={showItemsInCart}
+                  className="btn-updatecart"
+                  onClick={handleUpdateCartQuantity}
                 >
                   update cart
                 </Button>
@@ -89,7 +125,9 @@ function CartPage(props) {
                 </Col>
                 <Col sm={12} className="d-flex justify-content-between">
                   <Form.Label>Subtotal</Form.Label>
-                  <Form.Label>$123</Form.Label>
+                  <Form.Label>
+                    rs: {calculateSubTotal(cartItems.cartItems)}
+                  </Form.Label>
                 </Col>
                 <Col sm={12} className="d-flex justify-content-between">
                   <Form.Label>Shipping</Form.Label>
@@ -99,7 +137,9 @@ function CartPage(props) {
                 </Col>
                 <Col sm={12} className="d-flex justify-content-between">
                   <Form.Label>TOTAL</Form.Label>
-                  <Form.Label>$123</Form.Label>
+                  <Form.Label>
+                    rs: {calculateSubTotal(cartItems.cartItems)}
+                  </Form.Label>
                 </Col>
 
                 <Col sm={12}>
@@ -107,7 +147,7 @@ function CartPage(props) {
                     className="m-2"
                     variant="dark"
                     size="sm"
-                    className=""
+                    className="btn-proceedcheckout"
                     onClick={() => {
                       props.history.push("./checkout");
                     }}
@@ -133,11 +173,6 @@ function CartPage(props) {
           </Col>
         </Row>
       </Container>
-
-      <div>
-        <input name="address" onClick={() => setFname("p")} type="radio" />
-        <input name="address" onClick={() => setFname("p")} type="radio" />
-      </div>
     </Layout>
   );
 }

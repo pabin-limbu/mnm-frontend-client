@@ -1,0 +1,64 @@
+.comment-carouselSlick {
+  display: flex;
+  flex-direction: column;
+  background-color: #1c2331;
+}
+.comment-headercontainer {
+  padding-top: 20px;
+}
+.comment-slider > .slick-prev {
+  position: absolute;
+  left: 10px;
+  top: 90px;
+  z-index: 1;
+}
+
+.comment-slider > .slick-prev::before {
+  position: relative;
+  left: -5px;
+  font-size: 40px;
+
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+.comment-slider > .slick-next {
+  position: absolute;
+  right: 10px;
+  top: 90px;
+  z-index: 1;
+}
+.comment-slider > .slick-next::before {
+  position: relative;
+  right: 15px;
+  font-size: 40px;
+
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.comment-carouselSlick > .slick-slider:hover .slick-next::before,
+.comment-carouselSlick > .slick-slider:hover .slick-prev::before {
+  opacity: 1;
+}
+.comment-maincontainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  height: 180px;
+  max-height: 200px;
+}
+.comment-main {
+  width: 80%;
+  text-align: center;
+  color: white;
+  font-size: medium;
+}
+#comment-header {
+  color: white;
+}
+#comment-footer {
+  color: white;
+}

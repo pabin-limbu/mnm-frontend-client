@@ -5,7 +5,7 @@
 }
 .carousel-slider > .slick-prev {
   position: absolute;
-  left: 5px;
+  left: 10px;
   top: 90px;
   z-index: 1;
 }
@@ -19,7 +19,7 @@
 }
 .carousel-slider > .slick-next {
   position: absolute;
-  right: 5px;
+  right: 10px;
   top: 90px;
   z-index: 1;
 }

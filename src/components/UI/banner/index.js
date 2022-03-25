@@ -2,8 +2,9 @@ import React from "react";
 import Slider from "react-slick";
 import "./style.css";
 import { Container } from "react-bootstrap";
+import { generatePublicUrl } from "../../../urlConfig";
 
-function Banner() {
+function Banner({ bannerList }) {
   var settings = {
     dots: false,
     infinite: true,
@@ -48,23 +49,21 @@ function Banner() {
     ],
   };
   return (
-    <Container  className="banner-container">
+    <Container className="banner-container">
       <Slider className="banner-slider" {...settings}>
-        <div className="img-container">
-          <img className="banner-img" src="/images/Banners/b1.jpg" alt="" />
-        </div>
-        <div className="img-container">
-          <img className="banner-img" src="/images/Banners/b2.png" alt="" />
-        </div>
-        <div className="img-container">
-          <img className="banner-img" src="/images/Banners/b3.jpg" alt="" />
-        </div>
-        <div className="img-container">
-          <img className="banner-img" src="/images/Banners/b4.jpg" alt="" />
-        </div>
-        <div className="img-container">
-          <img className="banner-img" src="/images/Banners/b5.jpg" alt="" />
-        </div>
+        {bannerList && bannerList.length > 0
+          ? bannerList.map((banner) => {
+              return (
+                <div key={banner._id} className="img-container">
+                  <img
+                    className="banner-img"
+                    src={generatePublicUrl(banner.bannerImage)}
+                    alt=""
+                  />
+                </div>
+              );
+            })
+          : null}
       </Slider>
     </Container>
   );

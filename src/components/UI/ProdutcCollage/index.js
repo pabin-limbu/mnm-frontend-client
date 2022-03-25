@@ -4,11 +4,16 @@ import ItemCards from "../Cards/ItemCards";
 import "./style.css";
 
 function ProductCollage(props) {
+  const onHandleViewAll = () => {
+    props.history.push(`/${props.carouselCategorySlug}`);
+  };
+
   const {
     carouselCategoryname,
     products,
     setShowProductViewModal,
     setCurrentProduct,
+    setShowToast,
   } = props;
   return (
     <Container>
@@ -33,6 +38,7 @@ function ProductCollage(props) {
                       setShowProductViewModal={setShowProductViewModal}
                       setCurrentProduct={setCurrentProduct}
                       item={item}
+                      setShowToast={setShowToast}
                     ></ItemCards>
                   </Col>
                 );
@@ -44,6 +50,9 @@ function ProductCollage(props) {
             size="sm"
             variant="outline-warning"
             className="float-right mt-2"
+            onClick={() => {
+              onHandleViewAll();
+            }}
           >
             {" "}
             view all{" "}

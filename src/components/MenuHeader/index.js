@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCategory, getAllCategoryList } from "../../store/actions";
 import { BsChevronCompactDown } from "react-icons/bs";
-import { Container, Form } from "react-bootstrap";
-import { BsList, BsSearch } from "react-icons/bs";
-
+import { Container } from "react-bootstrap";
 import SideNavbar from "../SideNavBar/index";
+import { Link } from "react-router-dom";
 import "./style.css";
 const MenuHeader = () => {
   const [showNav, setShowNav] = useState(false);
@@ -25,8 +24,6 @@ const MenuHeader = () => {
     console.log("hiiiiiii");
   };
 
-  //console.log("menu header");
-
   // /**RENDER CATEGORY */
   const renderCategories = (categories) => {
     let categoryList = [];
@@ -36,32 +33,28 @@ const MenuHeader = () => {
           {category.parentId ? (
             category.children.length > 0 ? (
               <div className="cat-title-with-child d-flex justify-content-between">
-                <a
-                  href={`/${category.slug}?categoryId=${category._id}&type=${category.type}`}
-                >
+                <Link to={`/${category.slug}?categoryId=${category._id}`}>
                   {category.name}
-                </a>
+                </Link>
                 <BsChevronCompactDown onClick={showSubMenu} />
               </div>
             ) : (
-              <a
-                href={`/${category.slug}?categoryId=${category._id}&type=${category.type}`}
-              >
-                {" "}
+              <Link to={`/${category.slug}?categoryId=${category._id}`}>
                 {category.name}
-              </a>
+              </Link>
             )
           ) : category.children.length > 0 ? (
             <div className="cat-title-with-child d-flex justify-content-between ">
-              <a href={category.slug}>{category.name}</a>
+              <a href={`/${category.slug}?categoryId=${category._id}`}>
+                {category.name}
+              </a>
               <BsChevronCompactDown onClick={showSubMenu} />
             </div>
           ) : (
-            <a
-              href={`/${category.slug}?categoryId=${category._id}&type=${category.type}`}
-            >
+            <Link to={`/${category.slug}?categoryId=${category._id}`}>
+              {" "}
               {category.name}
-            </a>
+            </Link>
           )}
           {category.children.length > 0 ? (
             <ul>{renderCategories(category.children)}</ul>
@@ -72,7 +65,7 @@ const MenuHeader = () => {
     return categoryList;
   };
   /**RENDER CATEGORY END */
-  // d-flex justify-content-start  justify-content-md-center flex-wrap-reverse
+
   return (
     <Container fluid className="menu-header-container pr-0">
       <SideNavbar categories={category} />
