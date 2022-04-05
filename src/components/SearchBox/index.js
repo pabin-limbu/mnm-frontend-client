@@ -1,14 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-  Button,
-  Overlay,
-  Form,
-  InputGroup,
-  FormControl,
-  Fade,
-} from "react-bootstrap";
-import { IoSearch } from "react-icons/io5";
-import { IconContext } from "react-icons/lib";
+import React, { useEffect, useState } from "react";
+import { Button, Col, FormControl, InputGroup, Row } from "react-bootstrap";
+import { generatePublicUrl } from "../../urlConfig";
 import "./style.css";
 
 const itemList = [
@@ -39,142 +31,108 @@ const itemList = [
   "eleven",
 ];
 function SearchBox(props) {
-  const [items, setItems] = useState([]);
-  const [itemname, setItemname] = useState("");
-  const [show, setShow] = useState(false);
-  const [target, setTarget] = useState(null);
-  const ref = useRef(null);
-
+  const { show, handleClose, query, setQuery, allproducts } = props;
+  const [filteredItem, setFilteredItem] = useState([]);
   useEffect(() => {
+    //hide scrollbar from the page
     if (show) {
-      document.getElementsByTagName("body")[0].style.overflowY = "hidden";
+      document.getElementById("search-overlay").classList.toggle("active");
+      document.getElementsByTagName("body")[0].style.overflow = "hidden";
+      document.querySelector("html").style.marginRight = "17px";
     } else {
-      document.getElementsByTagName("body")[0].style.overflowY = "auto";
+      document.getElementById("search-overlay").classList.remove("active");
+      document.getElementsByTagName("body")[0].style.overflowY = "scroll";
+      document.querySelector("html").style.marginRight = "0px";
     }
   }, [show]);
 
-  const handleKeyUp = () => {
-    const filterItem = itemList.filter((item) => {
-      if (item.includes(itemname)) {
-        return item;
-      }
-    });
+  const handlekeyPress = () => {
+    let result = [];
+    if (query !== "" && query.length > 2) {
+      result = allproducts.filter((item) => {
+        if (item.name.toLocaleLowerCase().includes(query)) {
+          return item;
+        }
+      });
+    }
+    setFilteredItem(result);
+  };
 
-    setItems(filterItem);
-  };
-  const handleShowSearchOverlay = (event) => {
-    setShow(!show);
-    setTarget(event.target);
-  };
+  //logs
 
   return (
-    <div className="container-search" ref={ref}>
-      {/* <Button
-        variant="danger"
-        onClick={(event) => {
-          handleShowSearchOverlay(event);
-        }}
-      >
-        Search
-      </Button> */}
-      <IconContext.Provider
-        value={{
-          color: "black",
-          size: "2em",
-          className: "global-class-name",
-        }}
-      >
-        <span className="btn-search-container d-block w-100 ">
-          <IoSearch
-            size="1.76em"
-            onClick={(event) => {
-              handleShowSearchOverlay(event);
+    <div
+      className="search-overlay"
+      id="search-overlay"
+      onClick={() => {
+        handleClose();
+      }}
+    >
+      <div className="closeButton">
+        <span className="searchBtnClose">x</span>
+      </div>
+      <div className="searchfeild">
+        <InputGroup className="mb-3">
+          <FormControl
+            placeholder="Search..."
+            value={query}
+            onClick={(e) => {
+              e.stopPropagation();
             }}
-          ></IoSearch>
-        </span>
-      </IconContext.Provider>
-      <Overlay
-        target={target}
-        show={show}
-        placement="left"
-        transition={true}
-        container={ref}
-      >
-        {({ placement, arrowProps, show: _show, popper, ...props }) => (
-          <div
-            onClick={() => {
-              setShow(!show);
+            onChange={(e) => {
+              setQuery(e.target.value);
             }}
-            {...props}
-            style={{
-              boxSizing: "border-box",
-              backgroundColor: "rgba(255, 100, 100, 0.95)",
-              height: "100vh",
-              width: "100%",
-              position: "fixed",
-              top: "0",
-              left: "0",
-              color: "white",
-              borderRadius: 3,
-              transform: "translate(0,0,0)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-
-              ...props.style,
+            onKeyUp={() => {
+              handlekeyPress();
+            }}
+          />
+          <Button
+            variant="primary"
+            id=""
+            onClick={(e) => {
+              e.stopPropagation();
             }}
           >
-            <div
-              className="searchBox"
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <div className="searchForm">
-                <InputGroup size="lg" className="mb-3">
-                  <FormControl
-                    id="myInput"
-                    onKeyUp={handleKeyUp}
-                    placeholder="Search..."
-                    aria-label="Recipient's username"
-                    aria-describedby="basic-addon2"
-                    value={itemname}
-                    onChange={(e) => {
-                      setItemname(e.target.value);
-                    }}
-                  />
-                  <Button
-                    variant="dark"
-                    id="button-addon2"
-                    onClick={() => {
-                      console.log("clicked");
-                    }}
-                  >
-                    O
-                  </Button>
-                </InputGroup>
-              </div>
-              <div>
-                <ul
-                  id="myUl"
-                  style={{
-                    display:
-                      items.length && itemname.length > 0 ? "block" : "none",
-                  }}
-                >
-                  {items.map((item, index) => (
-                    <li key={index}>
-                      <a className="search-item-list" href="#">
-                        {item}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-      </Overlay>
+            search
+          </Button>
+        </InputGroup>
+      </div>
+
+      <div
+        className={`searchResults ${
+          filteredItem.length > 0 ? "d-block" : "d-none"
+        }`}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <ul className="filter-List">
+          {filteredItem.map((item) => {
+            return (
+              <li key={item._id} className="filter_listItem">
+                <a href={`/${item.slug}/${item._id}/`}>
+                  <Row>
+                    <Col xs={2}>
+                      <img
+                        src={generatePublicUrl(item.productPictures[0].img)}
+                        alt=""
+                        height={30}
+                        style={{ borderRadius: "50%" }}
+                      />
+                    </Col>
+                    <Col xs={7}>
+                      <p>{`${item.name}`}</p>
+                    </Col>
+                    <Col xs={3}>
+                      <p id="search-item-price">{`rs:${item.price}`}</p>
+                    </Col>
+                  </Row>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

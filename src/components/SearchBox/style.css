@@ -1,48 +1,96 @@
-.container-search {
-}
-.container-search > .show {
-  opacity: 1 !important;
+.search-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.1);
   z-index: 99;
-  pointer-events: auto !important;
-  transform: translate(0px, 0px) !important;
-  position: fixed !important;
 }
-/* body {
-  overflow-y: hidden;
-} */
-.btn-search-container {
-  width: 20px;
+
+.search-overlay.active {
   display: flex;
+  background-color: rgba(0, 0, 0, 0.8);
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  transition: background-color 2s;
+}
+
+.searchBtnClose {
+  color: white;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 30px;
   cursor: pointer;
+  animation: 0.3s ease-out 0s 1 slideToTop;
 }
-.searchBox {
-  /* position: absolute; */
+
+.searchfeild {
+  width: 90%;
 }
-.searchForm {
-  display: flex;
-}
-#myUl {
-  padding: 0;
-  background-color: rgba(255, 255, 255, 0.3);
-  display: none;
-  max-height: 300px;
+.searchResults {
+  width: 90%;
+  height: 50%;
+  max-height: 50%;
   overflow-y: auto;
-  border-radius: 5px;
 }
-#myUl > li {
-  margin-left: 0;
-  display: block;
+
+ul li {
+  color: white;
 }
-#myUl > li > a {
+.filter-List {
+  list-style-type: none;
+  background-color: gray;
+  padding-left: 5px;
+}
+.filter_listItem {
+  padding: 5px 0;
+}
+.filter_listItem a {
+  color: white;
   text-decoration: none;
-  color: black;
-  padding: 5px 10px;
-  font-size: 25px;
-  display: inline-block;
-  width: 100%;
+  font-size: 1em;
+  overflow: hidden;
 }
-#myUl > li > a:hover {
-  background-color: violet;
+#search-item-price {
+  font-size: 0.8em;
+}
+
+@keyframes slideToTop {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* // X-Small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .searchfeild,
+  .searchResults {
+    width: 50%;
+  }
+}
+
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
+
+/* // X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+}
+
+/* // XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
 }

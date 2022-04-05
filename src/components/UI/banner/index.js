@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "./style.css";
-import { Container } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
 import { generatePublicUrl } from "../../../urlConfig";
+import { Link } from "react-router-dom";
 
 function Banner({ bannerList }) {
+  const [currentItemIndex, setcurrentItemIndex] = useState(0);
+  const [currentItemIndex2, setcurrentItemIndex2] = useState(0);
+
   var settings = {
     dots: false,
     infinite: true,
@@ -18,12 +22,16 @@ function Banner({ bannerList }) {
     fade: true,
     acciblity: false,
     arrows: true,
+    beforeChange: (current, next) => {
+      setcurrentItemIndex(next);
+    },
+
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 1,
+          slidesToScroll: 1,
           infinite: true,
           dots: false,
         },
@@ -54,12 +62,23 @@ function Banner({ bannerList }) {
         {bannerList && bannerList.length > 0
           ? bannerList.map((banner) => {
               return (
-                <div key={banner._id} className="img-container">
-                  <img
-                    className="banner-img"
-                    src={generatePublicUrl(banner.bannerImage)}
-                    alt=""
-                  />
+                <div
+                  key={banner._id}
+                  className="img-container"
+                  onClick={() => {}}
+                >
+                  <Link
+                    to={
+                      bannerList[currentItemIndex].linkType == "category"
+                        ? `/${bannerList[currentItemIndex].slug}`
+                        : `/${bannerList[currentItemIndex].category.slug}/${bannerList[currentItemIndex].slugId}`
+                    }
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={generatePublicUrl(banner.bannerImage)}
+                    />
+                  </Link>
                 </div>
               );
             })

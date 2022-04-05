@@ -97,7 +97,28 @@ export const getFeaturedProductByCategory = (categories) => {
         dispatch({
           type: productConstaints.GET_FEATURED_PRODUCT_BY_CATEGORY_FAILURE,
         });
-        console.log("NP RESPONCE product.action");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getAllProduct = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: productConstaints.GET_ALL_PRODUCT_REQUEST });
+      const res = await axiosInstance.get("/product/getall");
+
+      if (res.status == 200) {
+        dispatch({
+          type: productConstaints.GET_ALL_PRODUCT_SUCCESS,
+          payload: res.data,
+        });
+      } else {
+        dispatch({
+          type: productConstaints.GET_ALL_PRODUCT_FAILURE,
+        });
       }
     } catch (error) {
       console.log(error);

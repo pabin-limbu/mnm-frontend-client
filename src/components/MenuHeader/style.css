@@ -1,6 +1,6 @@
 .menu-header {
+  /* only should be displayed in lg screen managed by BS */
   display: none;
-  /* background: rgba(255, 255, 255, 0.9); */
 }
 .menu-header > ul {
   display: flex;
@@ -8,13 +8,14 @@
   list-style-type: none;
   justify-content: center;
   background: rgba(255, 255, 255, 0.4);
+  /* background-color: red; */
 }
 .menu-header > ul > li {
   position: relative;
   padding: 0 20px;
   margin-bottom: 5px;
   display: block;
-  border-right: 1px solid white;
+  /* border-right: 1px solid blue; */
   width: 160px;
   height: 30px;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -29,6 +30,7 @@
 }
 
 /* remove text decoration */
+/* first list ko anchor */
 .menu-header > ul > li > a {
   display: inline-block;
   text-decoration: none;
@@ -45,16 +47,11 @@
   font-weight: bold;
   text-transform: uppercase;
 }
-.menu-header > ul > li > ul > li:hover div > a {
-  display: block;
-  text-decoration: none;
-  color: white;
-  width: 100%;
-}
 
 .menu-header > ul > li:hover > ul {
   display: block;
 }
+
 /* 1st Inner category */
 .menu-header > ul > li > ul {
   display: none;
@@ -73,16 +70,32 @@
   position: relative;
   background-color: white;
 }
+.menu-header > ul > li > ul > li > div {
+  padding: 0 20px;
+}
 .menu-header.d-lg-block > ul > li > ul > li > a {
   display: inline-block;
   width: 100%;
+}
+/* second list ko div */
+.menu-header > ul > li > ul > li > div > svg {
+  color: gray;
+}
+.menu-header > ul > li > ul > li:hover div > a {
+  display: block;
+  text-decoration: none;
+  color: white;
+  width: 100%;
+}
+.menu-header > ul > li > ul > li:hover div > svg {
+  color: white;
 }
 
 /* pyramid in top of box */
 .menu-header > ul > li > ul::before {
   content: "";
   position: absolute;
-  z-index: 1;
+  z-index: 99;
   border: 13px solid black;
   top: -26px;
   left: 25%;
@@ -105,8 +118,9 @@
   background-color: grey;
 }
 .menu-header > ul > li > ul > li:hover > a {
-  color: white;
+  color: black;
 }
+
 .menu-header > ul > li > ul > li > a {
   padding-top: 5px;
   padding-bottom: 5px;
@@ -123,7 +137,7 @@
   top: 0;
   left: 200px;
   position: absolute;
-  z-index: 9999;
+  z-index: 99;
   width: 200px;
   background-color: white;
   padding-left: 0;
@@ -172,7 +186,7 @@
 .menu-header > ul > li:last-child > ul > li > ul > a {
   color: black;
 }
-dl,
+
 ol,
 ul {
   margin-top: 0;

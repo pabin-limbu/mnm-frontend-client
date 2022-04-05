@@ -1,6 +1,7 @@
 import { productConstaints } from "../actions/constants";
 
 const initState = {
+  allProducts: [],
   products: [],
   productcurrent: {},
   featuredProduct: [],
@@ -11,13 +12,10 @@ export default (state = initState, action) => {
   console.log(action.type);
   switch (action.type) {
     case productConstaints.GET_PRODUCTS_BY_SLUG:
-      console.log("getting product by slug");
-      console.log(action.payload.products)
       state = {
         ...state,
         products: action.payload.products,
       };
-
       break;
     case productConstaints.GET_PRODUCTS_BY_ID:
       state = { ...state, productcurrent: action.payload.data };
@@ -34,6 +32,8 @@ export default (state = initState, action) => {
     case productConstaints.GET_FEATURED_PRODUCT_BY_CATEGORY_FAILURE:
       state = { ...state };
       break;
+    case productConstaints.GET_ALL_PRODUCT_SUCCESS:
+      state = { ...state, allProducts: action.payload.data };
 
     default:
       break;

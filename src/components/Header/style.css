@@ -57,7 +57,7 @@ p {
 
 /* cart with badge */
 .cartbadge-container {
-  background-color: white;
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,8 +82,15 @@ p {
   justify-content: center;
   cursor: pointer;
 }
-
 /* cart with badge */
+
+/* search btn */
+.btnsearch {
+  padding: 0 5px;
+  background-color: white;
+  border: 0px;
+}
+/* search btn end */
 
 /* // X-Small devices (portrait phones, less than 576px)
 // No media query for `xs` since this is the default in Bootstrap */

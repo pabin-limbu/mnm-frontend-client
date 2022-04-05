@@ -6,17 +6,16 @@ import { Container } from "react-bootstrap";
 import SideNavbar from "../SideNavBar/index";
 import { Link } from "react-router-dom";
 import "./style.css";
+import { IconContext } from "react-icons";
 const MenuHeader = () => {
   const [showNav, setShowNav] = useState(false);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllCategory());
-    //dispatch(getAllCategoryList());
   }, []);
 
   const category = useSelector((state) => state.category);
-  console.log(category);
 
   const showNavBar = () => {
     setShowNav(true);
@@ -37,7 +36,14 @@ const MenuHeader = () => {
                 <Link to={`/${category.slug}?categoryId=${category._id}`}>
                   {category.name}
                 </Link>
-                <BsChevronCompactDown onClick={showSubMenu} />
+                <IconContext.Provider
+                  value={{
+                    className: "arrowDown",
+                    size: "1em",
+                  }}
+                >
+                  <BsChevronCompactDown onClick={showSubMenu} />
+                </IconContext.Provider>
               </div>
             ) : (
               <Link to={`/${category.slug}?categoryId=${category._id}`}>
@@ -49,7 +55,11 @@ const MenuHeader = () => {
               <a href={`/${category.slug}?categoryId=${category._id}`}>
                 {category.name}
               </a>
-              <BsChevronCompactDown onClick={showSubMenu} />
+              <IconContext.Provider
+                value={{ color: "gray", className: "", size: "1em" }}
+              >
+                <BsChevronCompactDown onClick={showSubMenu} />
+              </IconContext.Provider>
             </div>
           ) : (
             <Link to={`/${category.slug}?categoryId=${category._id}`}>

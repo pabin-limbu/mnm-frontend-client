@@ -13,7 +13,7 @@
   object-fit: contain;
 }
 .slick-slider {
-  z-index: 1;
+  z-index: 8 !important;
 }
 .banner-slider > .slick-prev {
   position: absolute;
@@ -36,7 +36,6 @@
   position: relative;
   right: 5px;
   font-size: 30px;
-
   opacity: 0;
   transition: opacity 0.5s;
 }

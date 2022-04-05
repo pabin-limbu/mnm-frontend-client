@@ -60,7 +60,7 @@ const HomePage = (props) => {
         ></Toastmessage>
 
         {/* Product banner */}
-        <Banner bannerList={bannerList}></Banner>
+        {bannerList.length > 0 && <Banner bannerList={bannerList}></Banner>}
 
         <CarouselSlick
           featured

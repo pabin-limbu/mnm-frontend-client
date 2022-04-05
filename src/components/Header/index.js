@@ -1,15 +1,33 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Container, Navbar, Row, Col } from "react-bootstrap";
 import MenuHeader from "../MenuHeader";
 import SearchBox from "../SearchBox";
+import { BsSearch } from "react-icons/bs";
+import { IconContext } from "react-icons";
 import "./style.css";
+import { getAllProduct } from "../../store/actions";
 
 const Header = (props) => {
   const [sticky, setSticky] = useState("");
   const [itemCount, setItemCount] = useState(0);
   const cartItems = useSelector((state) => state.cart);
+
+  //search bar props.
+  const [show, setShow] = useState(false);
+  const [query, setQuery] = useState("");
+  const dispatch = useDispatch();
+  const allproducts = useSelector((state) => state.product.allProducts);
+
+  useEffect(() => {
+    dispatch(getAllProduct());
+  }, []);
+
+  //test
+  const handleClose = () => {
+    setShow(!show);
+  };
 
   //set item count in cart logo
   useEffect(() => {
@@ -39,11 +57,21 @@ const Header = (props) => {
         <Link to="#">About</Link>
         <Link to="#">Contact us</Link>
         <Link to="#">Login / Register</Link>
-        <div>
-          <SearchBox></SearchBox>
-        </div>
-      </Navbar>
+        <div></div>
 
+        <IconContext.Provider
+          value={{ color: "orange", className: "", size: "1.5em" }}
+        >
+          <button
+            onClick={() => {
+              setShow(!show);
+            }}
+            className="btnsearch"
+          >
+            <BsSearch />
+          </button>
+        </IconContext.Provider>
+      </Navbar>
       <Container fluid className={`header-menu-wrapper pt-sm-2 ${sticky}`}>
         <Row className="d-flex">
           <Col xs={6} sm={4} md={2}>
@@ -82,9 +110,29 @@ const Header = (props) => {
             sm={1}
             md={1}
           >
-            <SearchBox></SearchBox>
+            <IconContext.Provider
+              value={{ color: "orange", className: "", size: "2em" }}
+            >
+              <button
+                onClick={() => {
+                  setShow(!show);
+                }}
+                className="btnsearch"
+              >
+                <BsSearch />
+              </button>
+            </IconContext.Provider>
           </Col>
         </Row>
+
+        {/* search item */}
+        <SearchBox
+          show={show}
+          handleClose={handleClose}
+          query={query}
+          setQuery={setQuery}
+          allproducts={allproducts}
+        ></SearchBox>
       </Container>
     </div>
   );

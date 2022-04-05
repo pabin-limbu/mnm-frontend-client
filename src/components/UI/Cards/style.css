@@ -24,6 +24,7 @@
   transition-duration: 400ms;
   color: white;
   margin-top: 5px;
+  border-radius: 0px;
 }
 
 .card > .btn-quickView-container > .btn-quickView:active {
@@ -49,12 +50,12 @@
 
 /* buttons */
 .btn-quickView.btn.btn-primary {
-  background-color: rgba(0, 0, 0, 0.7) !important;
-  border-color: rgba(0, 0, 0, 0.7) !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  border-color: rgba(0, 0, 0, 0.0) !important;
 }
 
 .btn-addToCart.btn.btn-primary {
-  background-color: rgba(255, 152, 0, 0.7) !important;
+  background-color: rgba(255, 152, 0, 0.9) !important;
   border-color: #ffb300 !important;
   border-radius: 0px;
   font-weight: bold;
