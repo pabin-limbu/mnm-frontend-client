@@ -99,9 +99,7 @@ function SearchBox(props) {
       </div>
 
       <div
-        className={`searchResults ${
-          filteredItem.length > 0 ? "d-block" : "d-none"
-        }`}
+        className={`searchResults`}
         onClick={(e) => {
           e.stopPropagation();
         }}
