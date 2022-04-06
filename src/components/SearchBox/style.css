@@ -1,11 +1,11 @@
 .search-overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  position: fixed;
   left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
   display: none;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.9);
   z-index: 99;
   overflow: hidden;
 }
@@ -18,10 +18,10 @@
   flex-direction: column;
   transition: background-color 2s;
 }
-.search-overlay.active html,
+/* .search-overlay.active html,
 body {
   overflow: hidden;
-}
+} */
 
 .searchBtnClose {
   color: white;
@@ -45,35 +45,35 @@ body {
   background-color: white;
 }
 
-ul li {
+/* ul li {
   color: white;
-}
-.filter-List {
+} */
+/* .filter-List {
   list-style-type: none;
   background-color: gray;
   padding-left: 5px;
-}
-.filter_listItem {
+} */
+/* .filter_listItem {
   padding: 5px 0;
-}
-.filter_listItem a {
+} */
+/* .filter_listItem a {
   color: white;
   text-decoration: none;
   font-size: 1em;
   overflow: hidden;
-}
-#search-item-price {
+} */
+/* #search-item-price {
   font-size: 0.8em;
-}
+} */
 
-@keyframes slideToTop {
+/* @keyframes slideToTop {
   0% {
     transform: translateY(20px);
   }
   100% {
     transform: translateY(0px);
   }
-}
+} */
 
 /* // X-Small devices (portrait phones, less than 576px)
 // No media query for `xs` since this is the default in Bootstrap
@@ -84,10 +84,10 @@ ul li {
 
 /* // Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-  .searchfeild,
+  /* .searchfeild,
   .searchResults {
     width: 50%;
-  }
+  } */
 }
 
 /* // Large devices (desktops, 992px and up) */
