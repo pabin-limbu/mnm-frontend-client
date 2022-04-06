@@ -37,11 +37,13 @@ function SearchBox(props) {
     //hide scrollbar from the page
     if (show) {
       document.getElementById("search-overlay").classList.toggle("active");
-      document.getElementsByTagName("body")[0].style.overflow = "hidden";
+      //document.getElementsByTagName("body")[0].style.overflow = "hidden";
+      // document.querySelector("#homepage").style.overflow = "hidden";
       document.querySelector("html").style.marginRight = "17px";
     } else {
       document.getElementById("search-overlay").classList.remove("active");
-      document.getElementsByTagName("body")[0].style.overflowY = "scroll";
+      // document.getElementsByTagName("body")[0].style.overflowY = "scroll";
+      // document.querySelector("#homepage").style.overflow = "auto";
       document.querySelector("html").style.marginRight = "0px";
     }
   }, [show]);

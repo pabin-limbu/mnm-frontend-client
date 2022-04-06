@@ -51,7 +51,7 @@ const HomePage = (props) => {
   // console.log(props);
   const toggleShowToast = () => setShowToast(!showToast);
   return (
-    <div style={{}}>
+    <div id="homepage" className="homepage">
       <Layout {...props}>
         <Toastmessage
           show={showToast}

@@ -18,6 +18,10 @@
   flex-direction: column;
   transition: background-color 2s;
 }
+.search-overlay.active html,
+body {
+  overflow: hidden;
+}
 
 .searchBtnClose {
   color: white;
