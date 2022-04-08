@@ -72,7 +72,7 @@ const Header = (props) => {
           </button>
         </IconContext.Provider>
       </Navbar>
-      <Container fluid className={`header-menu-wrapper pt-sm-2 ${sticky}`}>
+      <Container fluid className={`header-menu-wrapper pt-sm-2 ${""}`}>
         <Row className="d-flex">
           <Col xs={6} sm={4} md={2}>
             {" "}
@@ -124,8 +124,10 @@ const Header = (props) => {
             </IconContext.Provider>
           </Col>
         </Row>
+      </Container>
 
-        {/* search item */}
+      {/* search item */}
+      <div className="searchbox-container">
         <SearchBox
           show={show}
           handleClose={handleClose}
@@ -133,7 +135,7 @@ const Header = (props) => {
           setQuery={setQuery}
           allproducts={allproducts}
         ></SearchBox>
-      </Container>
+      </div>
     </div>
   );
 };

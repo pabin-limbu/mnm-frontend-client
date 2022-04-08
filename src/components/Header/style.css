@@ -44,6 +44,12 @@ nav.logo-header {
 p {
   display: block;
 }
+
+/* TEST */
+.searchbox-container {
+}
+/* TEST END */
+
 .header-menu-wrapper.sticky {
   position: fixed;
   left: 0;

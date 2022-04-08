@@ -33,17 +33,20 @@ const itemList = [
 function SearchBox(props) {
   const { show, handleClose, query, setQuery, allproducts } = props;
   const [filteredItem, setFilteredItem] = useState([]);
+
+  //test array
+  const [testArray1, settestArray1] = useState(["pabin", "sachin", "alina"]);
+  const [testArray2, settestArray2] = useState(["apple", "mango", "banana"]);
+
   useEffect(() => {
     //hide scrollbar from the page
     if (show) {
       document.getElementById("search-overlay").classList.toggle("active");
-      document.getElementsByTagName("body")[0].style.overflow = "hidden";
-      // document.querySelector("#homepage").style.overflow = "hidden";
+      // document.getElementsByTagName("body")[0].style.overflow = "hidden";
       document.querySelector("html").style.marginRight = "17px";
     } else {
       document.getElementById("search-overlay").classList.remove("active");
       document.getElementsByTagName("body")[0].style.overflowY = "scroll";
-      // document.querySelector("#homepage").style.overflow = "auto";
       document.querySelector("html").style.marginRight = "0px";
     }
   }, [show]);
@@ -60,6 +63,18 @@ function SearchBox(props) {
     setFilteredItem(result);
   };
 
+  //test
+  const handleTest1 = (e) => {
+    e.stopPropagation();
+    settestArray1([...testArray1, "nishes"]);
+  };
+  const handleTest2 = (e) => {
+    e.stopPropagation();
+    const newArray = [...testArray1];
+    newArray.shift();
+    settestArray1(newArray);
+  };
+
   //logs
 
   return (
@@ -70,7 +85,7 @@ function SearchBox(props) {
         handleClose();
       }}
     >
-      <div className="closeButton">
+      {/* <div className="closeButton">
         <span className="searchBtnClose">x</span>
       </div>
       <div className="searchfeild">
@@ -98,9 +113,9 @@ function SearchBox(props) {
             search
           </Button>
         </InputGroup>
-      </div>
+      </div> */}
 
-      <div
+      {/* <div
         className={`searchResults`}
         onClick={(e) => {
           e.stopPropagation();
@@ -132,6 +147,33 @@ function SearchBox(props) {
             );
           })}
         </ul>
+      </div> */}
+
+      <h1>Test</h1>
+      <button
+        onClick={(event) => {
+          handleTest1(event);
+        }}
+        style={{ color: "black" }}
+      >
+        Test
+      </button>
+      <button
+        onClick={(event) => {
+          handleTest2(event);
+        }}
+        style={{ color: "black" }}
+      >
+        Test 2
+      </button>
+      <div
+        className="testresult"
+        style={{ width: "400px", height: "400px", backgroundColor: "white" }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        {JSON.stringify(testArray1)}
       </div>
     </div>
   );

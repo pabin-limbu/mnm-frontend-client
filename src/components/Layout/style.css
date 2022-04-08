@@ -1,0 +1,4 @@
+.layout-container {
+  /* position relative to make the absolute position of search overlay */
+  position: relative;
+}
