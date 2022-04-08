@@ -37,6 +37,7 @@ function SearchBox(props) {
   //test array
   const [testArray1, settestArray1] = useState(["pabin", "sachin", "alina"]);
   const [testArray2, settestArray2] = useState(["apple", "mango", "banana"]);
+  const [testText, setTestText] = useState("");
 
   useEffect(() => {
     //hide scrollbar from the page
@@ -99,8 +100,12 @@ function SearchBox(props) {
             onChange={(e) => {
               setQuery(e.target.value);
             }}
-            onKeyUp={() => {
+            onInput={() => {
               handlekeyPress();
+              setTestText("pabin");
+            }}
+            onKeyDown={() => {
+              console.log("keydown : " + query);
             }}
           />
           <Button
@@ -121,6 +126,7 @@ function SearchBox(props) {
           e.stopPropagation();
         }}
       >
+        {JSON.stringify(testText)}
         {JSON.stringify(filteredItem)}
         <ul className="filter-List">
           {filteredItem.map((item) => {
