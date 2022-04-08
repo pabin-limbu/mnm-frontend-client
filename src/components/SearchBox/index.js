@@ -174,6 +174,11 @@ function SearchBox(props) {
         }}
       >
         {JSON.stringify(testArray1)}
+        <ul>
+          {testArray1.map((item, index) => {
+            return <li key={index}>{item}</li>;
+          })}
+        </ul>
       </div>
     </div>
   );
