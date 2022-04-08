@@ -53,6 +53,7 @@ function SearchBox(props) {
   }, [show]);
 
   const handlekeyPress = () => {
+    setTestText("pabin");
     let result = [];
     if (query !== "" && query.length > 2) {
       result = allproducts.filter((item) => {
@@ -102,7 +103,6 @@ function SearchBox(props) {
             }}
             onInput={() => {
               handlekeyPress();
-              setTestText("pabin");
             }}
             onKeyDown={() => {
               console.log("keydown : " + query);
