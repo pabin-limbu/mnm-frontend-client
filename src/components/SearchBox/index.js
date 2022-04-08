@@ -85,7 +85,7 @@ function SearchBox(props) {
         handleClose();
       }}
     >
-      {/* <div className="closeButton">
+      <div className="closeButton">
         <span className="searchBtnClose">x</span>
       </div>
       <div className="searchfeild">
@@ -113,19 +113,21 @@ function SearchBox(props) {
             search
           </Button>
         </InputGroup>
-      </div> */}
+      </div>
 
-      {/* <div
+      <div
         className={`searchResults`}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
+        {JSON.stringify(filteredItem)}
         <ul className="filter-List">
           {filteredItem.map((item) => {
             return (
               <li key={item._id} className="filter_listItem">
-                <a href={`/${item.slug}/${item._id}/`}>
+                {item.name}
+                {/* <a href={`/${item.slug}/${item._id}/`}>
                   <Row>
                     <Col xs={2}>
                       <img
@@ -142,12 +144,12 @@ function SearchBox(props) {
                       <p id="search-item-price">{`rs:${item.price}`}</p>
                     </Col>
                   </Row>
-                </a>
+                </a> */}
               </li>
             );
           })}
         </ul>
-      </div> */}
+      </div>
 
       <h1>Test</h1>
       <button
