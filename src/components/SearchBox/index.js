@@ -52,17 +52,15 @@ function SearchBox(props) {
     }
   }, [show]);
 
-  const handlekeyPress = () => {
+  const handlekeyPress = async () => {
     setTestText("pabin");
     let result = [];
-
     if (query !== "" && query.length > 2) {
-      result = [...allproducts];
-      // result = allproducts.filter((item) => {
-      //   if (item.name.toLocaleLowerCase().includes(query)) {
-      //     return item;
-      //   }
-      // });
+      result = await allproducts.filter((item) => {
+        if (item.name.toLocaleLowerCase().includes(query)) {
+          return item;
+        }
+      });
     }
     setFilteredItem(result);
   };
