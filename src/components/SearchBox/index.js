@@ -57,7 +57,7 @@ function SearchBox(props) {
     let result = [];
 
     if (query !== "" && query.length > 2) {
-      result = ["pabin", "sachin", "alina"];
+      result = [...allproducts];
       // result = allproducts.filter((item) => {
       //   if (item.name.toLocaleLowerCase().includes(query)) {
       //     return item;
@@ -134,7 +134,7 @@ function SearchBox(props) {
           {filteredItem.map((item) => {
             return (
               <li key={""} className="filter_listItem">
-                {item}
+                {item.name}
                 {/* <a href={`/${item.slug}/${item._id}/`}>
                   <Row>
                     <Col xs={2}>
