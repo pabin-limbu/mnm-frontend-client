@@ -55,7 +55,7 @@ function SearchBox(props) {
   const handlekeyPress = async () => {
     if (query !== "" && query.length > 2) {
       let result = await allproducts.filter((item) => {
-        if (item.name.toLocaleLowerCase().includes(query)) {
+        if (item.name.includes(query)) {
           setTestText("sachin");
           return item;
         }
