@@ -55,12 +55,14 @@ function SearchBox(props) {
   const handlekeyPress = () => {
     setTestText("pabin");
     let result = [];
+
     if (query !== "" && query.length > 2) {
-      result = allproducts.filter((item) => {
-        if (item.name.toLocaleLowerCase().includes(query)) {
-          return item;
-        }
-      });
+      result = ["pabin", "sachin", "alina"];
+      // result = allproducts.filter((item) => {
+      //   if (item.name.toLocaleLowerCase().includes(query)) {
+      //     return item;
+      //   }
+      // });
     }
     setFilteredItem(result);
   };
@@ -131,8 +133,8 @@ function SearchBox(props) {
         <ul className="filter-List">
           {filteredItem.map((item) => {
             return (
-              <li key={item._id} className="filter_listItem">
-                {item.name}
+              <li key={""} className="filter_listItem">
+                {item}
                 {/* <a href={`/${item.slug}/${item._id}/`}>
                   <Row>
                     <Col xs={2}>
