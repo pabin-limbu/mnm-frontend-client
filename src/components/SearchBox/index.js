@@ -61,8 +61,8 @@ function SearchBox(props) {
           return item;
         }
       });
+      setFilteredItem(result);
     }
-    setFilteredItem(result);
   };
 
   //test
