@@ -77,7 +77,14 @@ function SearchBox(props) {
     settestArray1(newArray);
   };
 
+  const testname = "pAbIn";
+  const qry = "pabin";
+
+  const res = testname.toLocaleLowerCase().includes(qry);
+
   //logs
+
+  console.log("pabin", res);
 
   return (
     <div
@@ -126,7 +133,12 @@ function SearchBox(props) {
           e.stopPropagation();
         }}
       >
+        {testname.toLocaleLowerCase()}
+        <br />
+        {testname.toLocaleLowerCase().includes(qry).toString()}
+
         {JSON.stringify(testText)}
+
         {JSON.stringify(filteredItem)}
         <ul className="filter-List">
           {filteredItem.map((item) => {
