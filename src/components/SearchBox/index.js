@@ -53,13 +53,12 @@ function SearchBox(props) {
   }, [show]);
 
   const handlekeyPress = async () => {
-    setTestText("pabin");
     if (query !== "" && query.length > 2) {
       let result = await allproducts.filter((item) => {
-        // if (item.name.toLocaleLowerCase().includes(query)) {
-        //   return item;
-        // }
-        return item;
+        if (item.name.toLocaleLowerCase().includes(query)) {
+          setTestText("sachin");
+          return item;
+        }
       });
       setFilteredItem(result);
     }
@@ -77,14 +76,7 @@ function SearchBox(props) {
     settestArray1(newArray);
   };
 
-  const testname = "pAbIn";
-  const qry = "pabin";
-
-  const res = testname.toLocaleLowerCase().includes(qry);
-
   //logs
-
-  console.log("pabin", res);
 
   return (
     <div
@@ -133,12 +125,7 @@ function SearchBox(props) {
           e.stopPropagation();
         }}
       >
-        {testname.toLocaleLowerCase()}
-        <br />
-        {testname.toLocaleLowerCase().includes(qry).toString()}
-
         {JSON.stringify(testText)}
-
         {JSON.stringify(filteredItem)}
         <ul className="filter-List">
           {filteredItem.map((item) => {
