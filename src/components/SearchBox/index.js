@@ -56,9 +56,10 @@ function SearchBox(props) {
     setTestText("pabin");
     if (query !== "" && query.length > 2) {
       let result = await allproducts.filter((item) => {
-        if (item.name.toLocaleLowerCase().includes(query)) {
-          return item;
-        }
+        // if (item.name.toLocaleLowerCase().includes(query)) {
+        //   return item;
+        // }
+        return item;
       });
       setFilteredItem(result);
     }
