@@ -33,7 +33,7 @@ function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
       cityDistrictTown,
       landmark,
       alternatePhoneNumber,
-      selected: true,
+      selected: false,
       edit: false,
     };
     //if addr then update else add
@@ -42,7 +42,6 @@ function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
       setAddnewaddress(false);
     }
     if (addr) {
-      console.log("hello");
       dispatch(updateAddress(userAddress));
       //NOTE: the edit form will close because the edit option in user address is been set to false.
     }

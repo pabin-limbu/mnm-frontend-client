@@ -17,8 +17,9 @@ import OrderSummary from "../../components/OrderSummary";
 import AddressForm from "../../components/AddressForm";
 import { populateUserAdress, deleteAddress } from "../../store/actions";
 import { addOrder } from "../../store/actions";
-import "./style.css";
 import ErrorAlert from "../../components/UI/ErrorAlert";
+import { IoCreateOutline, IoTrashOutline } from "react-icons/io5";
+import "./style.css";
 
 function CustomToggle({ children, value, eventKey, setPayment }) {
   const decoratedOnClick = useAccordionButton(eventKey, (e) => {
@@ -83,15 +84,16 @@ const Address = ({
               name="address"
               onClick={() => selectAddress(addr)}
               type="radio"
+              checked={addr.selected == true ? "checked" : null}
             />
           </div>
         </Col>
         <Col xs={addr.edit ? 12 : 11}>
           {!addr.edit ? (
-            <Row className="">
-              <Col xs={6}>
+            <Row className="delevery-address-summary">
+              <Col xs={8}>
                 <div>
-                  <span className="addressName">{addr.name}</span>
+                  <span className="addressName">{addr.name} </span>
                   <span className="addressType">{addr.addressType}</span>
                   <span className="addressMobileNumber">
                     {addr.mobileNumber}
@@ -102,10 +104,10 @@ const Address = ({
                   {`${addr.locality} - ${addr.mobileNumber}`}
                 </div>
               </Col>
-              <Col xs={6}>
-                <Row>
-                  <Col>
-                    <div className="d-flex justify-content-end align-items-center h-100">
+              <Col xs={4}>
+                <Row className="delevery-address-controls">
+                  <Col xs={12}>
+                    <div className="d-flex justify-content-end align-items-center h-100 pe-md-3">
                       {addr.selected && (
                         <Button
                           className=" mt-2 "
@@ -115,7 +117,7 @@ const Address = ({
                             handleEditAddress(addr, address, setAddress);
                           }}
                         >
-                          edit
+                          <IoCreateOutline />
                         </Button>
                       )}
                       {addr.selected && (
@@ -127,20 +129,20 @@ const Address = ({
                             onDeleteAddress(addr);
                           }}
                         >
-                          Delete
+                          <IoTrashOutline />
                         </Button>
                       )}
                     </div>
                   </Col>
-                  <Col>
-                    <div className="d-flex justify-content-end align-items-center mt-2 pe-1">
+                  <Col xs={12}>
+                    <div className="d-flex justify-content-end align-items-center mt-2 pe-md-3">
                       {addr.selected && (
                         <Button
                           variant="success"
                           onClick={() => confirmDeliveryAddress(addr)}
                           size="sm"
                         >
-                          Deliver Here
+                          Deliver here
                         </Button>
                       )}
                     </div>
@@ -186,6 +188,7 @@ function CheckOutPage(props) {
 
   //fetch all user address from redux.
   const userAddresses = useSelector((state) => state.checkout.useraddress);
+  console.log({ userAddresses });
 
   useEffect(() => {
     const items = cart.cartItems;
@@ -454,7 +457,22 @@ function CheckOutPage(props) {
                       <>
                         {confirmAddress ? (
                           <div className="finaladdress">
-                            <p>{`${selectedAddress.name} ${selectedAddress.address} ${selectedAddress.locality} ${selectedAddress.mobileNumber}  `}</p>
+                            <p>
+                              <span>
+                                {" "}
+                                {`${selectedAddress.name} - ${selectedAddress.mobileNumber}`}{" "}
+                              </span>
+                              <span
+                                style={{
+                                  borderLeft: "1px solid white",
+                                  padding: "0 4px",
+                                }}
+                              >
+                                {selectedAddress.address}{" "}
+                                {selectedAddress.locality}{" "}
+                                {selectedAddress.alternatePhoneNumber}{" "}
+                              </span>
+                            </p>
                             <span
                               className="finaladdressclose"
                               onClick={() => {

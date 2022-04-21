@@ -44,6 +44,12 @@
 .order-placement-control ul li a {
   text-decoration: none;
 }
+.delevery-address-summary {
+  border-left: 1px solid white;
+}
+/* .delevery-address-controls {
+  border-left: 1px solid white;
+} */
 /* .oreder-summary-container {
   background-color: white;
 } */
@@ -129,7 +135,7 @@
   .checkout-controls-btn-container {
     position: relative;
     display: flex;
-    align-items: center;  
+    align-items: center;
     justify-content: space-between;
   }
 }

@@ -40,7 +40,7 @@ function OrderSummary({ setAllCartItems, allCartItems, subTotal, viewOnly }) {
         <Col className={`${viewOnly && "d-none"}`} sm={12}>
           <Form.Label>DISCOUNT CODE</Form.Label>
           <Form.Control type="text" placeholder="Coupen code" />
-          <Button className="m-2" variant="warning" size="sm" className="">
+          <Button className="m-2" variant="warning" size="sm">
             Apply coupon
           </Button>
         </Col>
@@ -59,7 +59,7 @@ function OrderSummary({ setAllCartItems, allCartItems, subTotal, viewOnly }) {
         </Col>
         <Col sm={12} className="d-flex justify-content-between">
           <Form.Label>TOTAL</Form.Label>
-          <Form.Label>$123</Form.Label>
+          <Form.Label>${subTotal}</Form.Label>
         </Col>
       </Row>
     </div>
