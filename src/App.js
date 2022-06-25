@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { getInitialData } from "./store/actions/initialdata.actions";
 import CheckOutPage from "./containers/CheckOutPage";
 import ProductDetailsPage from "./containers/PrdouctDetailsPage";
+import SuccessCheckoutSummary from "./containers/SuccessCheckoutSummary";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,14 +29,23 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact component={HomePage}></Route>
-          <Route path="/cart" component={CartPage}></Route>
-          <Route path="/checkout" component={CheckOutPage}></Route>
+          <Route path="/cart" exact component={CartPage}></Route>
+          <Route path="/checkout" exact component={CheckOutPage}></Route>
           <Route
-            path="/:slug/:id/"
+            path="/success-order"
+            exact
+            component={SuccessCheckoutSummary}
+          ></Route>
+          <Route
+            path="/product/:slug/:id/"
             exact
             component={ProductDetailsPage}
           ></Route>
-          <Route path="/:slug" exact component={ProductListPage}></Route>
+          <Route
+            path="/product/:slug"
+            exact
+            component={ProductListPage}
+          ></Route>
         </Switch>
       </Router>
     </div>

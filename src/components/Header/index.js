@@ -47,7 +47,6 @@ const Header = (props) => {
   });
 
   const goToCheckoutPage = () => {
-    console.log(props);
     props.history && props.history.push("/cart");
   };
 

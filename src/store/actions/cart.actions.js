@@ -14,20 +14,19 @@ export const addToCart = (product, newQty = 0) => {
         ? parseInt(cartItems[product._id].qty + newQty)
         : newQty;
       cartItems[product._id] = { ...product, qty };
+
       //updating Items new quantity in local storage.
       localStorage.setItem("cart", JSON.stringify(cartItems));
-      //making add to cart request
+
       dispatch({ type: cartConstants.ADD_TO_CART_REQUEST });
 
       dispatch({
         type: cartConstants.ADD_TO_CART_SUCCESS,
         payload: { cartItems },
       });
-
       return { msg: "success" };
     } catch (error) {
-      console.log(error);
-      return { msg: "failure" };
+      throw new Error(error);
     }
   };
 };

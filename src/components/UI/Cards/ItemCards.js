@@ -28,6 +28,7 @@ function ItemCards(props) {
         {
           _id: item._id,
           name: item.name,
+          category: item.category,
           price: item.price,
           quantity: item.quantity,
           productPictures: item.productPictures,

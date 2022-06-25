@@ -1,0 +1,46 @@
+.item-table tr td {
+  padding-right: 40px;
+}
+.item-table tr {
+  border-bottom: 1px solod gray;
+}
+.order-details {
+  margin-bottom: 20px;
+}
+.item-table {
+  margin-top: 20px;
+}
+
+.item-table th,
+td {
+  border-bottom: 1px solid rgba(36, 34, 34, 0.5);
+  border-collapse: collapse;
+}
+.item-table tbody {
+  padding: 10px 0 10px 0;
+  color: black;
+  display: block;
+}
+.item-table tbody tr:last-child {
+  height: 50px;
+  padding-top: 10px;
+  font-weight: bold;
+}
+
+.item-table tbody tr:last-child td:first-child {
+  font-size: large;
+}
+
+.order-detail-summary {
+  background-color: antiquewhite;
+  padding: 5px;
+}
+
+.order-detail-summary p span {
+  font-weight: bold;
+}
+.btnContinuwShop {
+  border-radius: 0;
+  font-size: large;
+  margin-bottom: 5px;
+}

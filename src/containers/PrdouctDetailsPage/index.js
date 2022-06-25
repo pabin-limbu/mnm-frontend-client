@@ -64,7 +64,7 @@ function ProductDetailsPage(props) {
 
   return (
     <div>
-      <Layout>
+      <Layout {...props}>
         <Row>
           <Col xs={12} md={6}>
             {/* product image */}

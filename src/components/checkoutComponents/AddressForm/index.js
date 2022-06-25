@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { MaterialInput } from "../UI/MateralUi";
+import { MaterialInput } from "../../UI/MateralUi";
 import { Button, Col, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addAddress, updateAddress } from "../../store/actions";
+import { addAddress, updateAddress } from "../../../store/actions";
 import { nanoid } from "nanoid";
 import "./style.css";
 
-function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
+function AddressForm({
+  setShowAddAddressModal,
+  address: addr,
+  handleEditAddressCancel,
+}) {
   const [name, setName] = useState(addr ? addr.name : "");
   const [mobileNumber, setMobileNumber] = useState(
     addr ? addr.mobileNumber : ""
@@ -22,6 +26,9 @@ function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
   );
 
   const dispatch = useDispatch();
+
+
+  
 
   const submimtAddress = (addr) => {
     const userAddress = {
@@ -39,7 +46,7 @@ function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
     //if addr then update else add
     if (!addr) {
       dispatch(addAddress(userAddress));
-      setAddnewaddress(false);
+      setShowAddAddressModal(false);
     }
     if (addr) {
       dispatch(updateAddress(userAddress));
@@ -60,7 +67,7 @@ function AddressForm({ setAddnewaddress, addr, handleEditAddressCancel }) {
 
   const handleCancelAddress = () => {
     if (!addr) {
-      setAddnewaddress(false);
+      setShowAddAddressModal(false);
     }
     if (addr) {
       handleEditAddressCancel(addr);

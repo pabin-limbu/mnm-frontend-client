@@ -7,188 +7,37 @@ import {
   Navbar,
   Button,
   Form,
-  Accordion,
-  useAccordionButton,
-  InputGroup,
   Alert,
 } from "react-bootstrap";
-
 import OrderSummary from "../../components/OrderSummary";
-import AddressForm from "../../components/AddressForm";
+import AddressForm from "../../components/checkoutComponents/AddressForm";
 import { populateUserAdress, deleteAddress } from "../../store/actions";
 import { addOrder } from "../../store/actions";
 import ErrorAlert from "../../components/UI/ErrorAlert";
-import { IoCreateOutline, IoTrashOutline } from "react-icons/io5";
+import CheckoutStep from "../../components/checkoutComponents/CheckoutStep";
+import Address from "../../components/checkoutComponents/Address";
 import "./style.css";
-
-function CustomToggle({ children, value, eventKey, setPayment }) {
-  const decoratedOnClick = useAccordionButton(eventKey, (e) => {
-    console.log(e.target.value);
-    setPayment(e.target.value);
-  });
-
-  return (
-    <InputGroup>
-      <InputGroup.Radio
-        name="pabin"
-        value={value}
-        onChange={decoratedOnClick}
-        aria-label="Radio button for following text input"
-        className="checkout-rdo-payment"
-        defaultChecked={value == "cash" ? true : false}
-      />
-      <InputGroup.Text id="" className="checkout-paymentlist-item">
-        {children}
-      </InputGroup.Text>
-    </InputGroup>
-  );
-}
-//checkout steps
-const CheckoutStep = (props) => {
-  return (
-    <div
-      className={`checkoutStep ${
-        props.currentStep == props.stepNumber ? "active" : ""
-      }`}
-    >
-      <div className="checkoutstep-title mt-2 mb-2">
-        <span className="stepNumber">{props.stepNumber} </span>
-        <span className="stepTitle">{props.title}</span>
-        <span className="stepTitle">{props.currentStep}</span>
-      </div>
-
-      {props.body && props.body}
-    </div>
-  );
-};
-
-//address
-const Address = ({
-  addr,
-  selectAddress,
-  confirmDeliveryAddress,
-  onDeleteAddress,
-  handleEditAddress,
-  address,
-  setAddress,
-  setAddnewaddress,
-  handleEditAddressCancel,
-}) => {
-  return (
-    <div className="addresscontainer">
-      <Row>
-        <Col xs={1} className={addr.edit ? "d-none" : ""}>
-          {" "}
-          <div className="ps-2 d-flex justify-content-center align-items-center h-100">
-            <input
-              name="address"
-              onClick={() => selectAddress(addr)}
-              type="radio"
-              checked={addr.selected == true ? "checked" : null}
-            />
-          </div>
-        </Col>
-        <Col xs={addr.edit ? 12 : 11}>
-          {!addr.edit ? (
-            <Row className="delevery-address-summary">
-              <Col xs={8}>
-                <div>
-                  <span className="addressName">{addr.name} </span>
-                  <span className="addressType">{addr.addressType}</span>
-                  <span className="addressMobileNumber">
-                    {addr.mobileNumber}
-                  </span>
-                </div>
-                <div className="fullAddress">
-                  {addr.address} <br />{" "}
-                  {`${addr.locality} - ${addr.mobileNumber}`}
-                </div>
-              </Col>
-              <Col xs={4}>
-                <Row className="delevery-address-controls">
-                  <Col xs={12}>
-                    <div className="d-flex justify-content-end align-items-center h-100 pe-md-3">
-                      {addr.selected && (
-                        <Button
-                          className=" mt-2 "
-                          size="sm"
-                          variant="warning"
-                          onClick={() => {
-                            handleEditAddress(addr, address, setAddress);
-                          }}
-                        >
-                          <IoCreateOutline />
-                        </Button>
-                      )}
-                      {addr.selected && (
-                        <Button
-                          className=" mt-2 ms-2"
-                          size="sm"
-                          variant="danger"
-                          onClick={() => {
-                            onDeleteAddress(addr);
-                          }}
-                        >
-                          <IoTrashOutline />
-                        </Button>
-                      )}
-                    </div>
-                  </Col>
-                  <Col xs={12}>
-                    <div className="d-flex justify-content-end align-items-center mt-2 pe-md-3">
-                      {addr.selected && (
-                        <Button
-                          variant="success"
-                          onClick={() => confirmDeliveryAddress(addr)}
-                          size="sm"
-                        >
-                          Deliver here
-                        </Button>
-                      )}
-                    </div>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          ) : (
-            <AddressForm
-              address={address}
-              setAddress={setAddress}
-              addr={addr}
-              setAddnewaddress={setAddnewaddress}
-              handleEditAddressCancel={handleEditAddressCancel}
-            />
-          )}
-        </Col>
-      </Row>
-    </div>
-  );
-};
+import ItemSummaryAccordian from "../../components/checkoutComponents/ItemSummaryAccordian";
+import PaymentAccordian from "../../components/checkoutComponents/PaymentAccordian";
+import CheckoutFooter from "../../components/checkoutComponents/CheckoutFooter";
 
 function CheckOutPage(props) {
-  // ordersummary states lifting state up.
   const [allCartItems, setAllCartItems] = useState("");
   const [subTotal, setSubTotal] = useState(0);
-  const cart = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  //check out page states
-  const [address, setAddress] = useState([]);
-  const [addnewaddress, setAddnewaddress] = useState(false);
+  const [addresses, setAddresses] = useState([]);
+  const [showAddAddressModal, setShowAddAddressModal] = useState(false);
   const [ageConfirmation, setAgeConfirmation] = useState(false);
   const [payment, setPayment] = useState("cash");
   const [showAlert, setShowAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  //address state
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [confirmAddress, setConfirmAddress] = useState(false);
-  //payment state
   const [confirmPayment, setConfirmPayment] = useState(false);
-  //order steps state.
   const [currentStep, setCurrentStep] = useState(1);
-
   //fetch all user address from redux.
   const userAddresses = useSelector((state) => state.checkout.useraddress);
-  console.log({ userAddresses });
+  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const items = cart.cartItems;
@@ -199,8 +48,6 @@ function CheckOutPage(props) {
   useEffect(() => {
     if (Object.keys(allCartItems).length > 0) {
       calculateSubTotal(allCartItems);
-    } else {
-      console.log("no");
     }
   }, [allCartItems]);
 
@@ -209,12 +56,11 @@ function CheckOutPage(props) {
   }, []);
 
   useEffect(() => {
-    setAddress(userAddresses);
+    setAddresses(userAddresses);
   }, [userAddresses]);
 
   //item subtotal.
   function calculateSubTotal(allCartItems) {
-    // console.log(allCartItems);
     let totalsum = 0;
     Object.keys(allCartItems).forEach((item, index) => {
       //item overall price depend on quantity.
@@ -225,52 +71,23 @@ function CheckOutPage(props) {
     setSubTotal(totalsum);
   }
 
-  //on address radio select
-  const selectAddress = (addr) => {
-    //when user select address then show butotns .
-    const updatedAddress = address.map((adr) =>
-      //select address should be matched with id.
-      adr.id === addr.id
-        ? { ...adr, selected: true }
-        : { ...adr, selected: false }
-    );
-
-    setAddress(updatedAddress);
-  };
-
   //select delivery address
-  const confirmDeliveryAddress = (addr) => {
-    setSelectedAddress(addr);
+  const confirmDeliveryAddress = (address) => {
+    setSelectedAddress(address);
     setConfirmAddress(true);
   };
 
-  //delete address
-  const onDeleteAddress = (addr) => {
-    // console.log("delete address clicked", addr);
-    dispatch(deleteAddress(addr));
-  };
-
-  //Edit address
-  const handleEditAddress = (addr, address, setAddress) => {
-    //create new address array with edit property and set it true.
-    const updatedAddress = address.map((adr) =>
-      adr.id === addr.id ? { ...adr, edit: true } : { ...adr, edit: false }
-    );
-    setAddress(updatedAddress);
-  };
-
-  //edit address cancel
-  const handleEditAddressCancel = (addr) => {
-    //if addr means the edit value of selected address is true which we have to make false while cancel edit.
-    if (addr) {
-      const updatedAddress = address.map((adr) =>
-        adr.id === addr.id ? { ...adr, edit: false } : { ...adr }
+  const handleEditAddressCancel = (address) => {
+    if (address) {
+      const updatedAddress = addresses.map((adr) =>
+        adr.id === address.id ? { ...adr, edit: false } : { ...adr }
       );
-      setAddress(updatedAddress);
+      setAddresses(updatedAddress);
     }
   };
-
-  //submit checkout
+  const onDeleteAddress = (addr) => {
+    dispatch(deleteAddress(addr));
+  };
   const handleCheckoutSubmit = () => {
     //check address selected
     switch (currentStep) {
@@ -303,6 +120,8 @@ function CheckOutPage(props) {
           //order items in array.
           const items = Object.keys(cart.cartItems).map((key) => ({
             productId: key,
+            name: cart.cartItems[key].name,
+            category: cart.cartItems[key].category,
             payablePrice: cart.cartItems[key].price,
             purchasedQty: cart.cartItems[key].qty,
           }));
@@ -318,13 +137,23 @@ function CheckOutPage(props) {
             payment,
           };
 
-          dispatch(addOrder(payload));
+          dispatch(addOrder(payload)).then((res) => {
+            if (res.status === 200) {
+              const location = {
+                pathname: `/success-order`,
+                search: `?oid=${res.data.orderid}`,
+              };
+              props.history.push(location);
+            }
+          });
         }
+        break;
+
+      case 3:
+        console.log("case 3 reached");
         break;
     }
   };
-
-  //Handle checkout back button.
   const handleCheckoutBack = (props) => {
     switch (currentStep) {
       case 1:
@@ -358,28 +187,6 @@ function CheckOutPage(props) {
                 </Navbar.Brand>
               </Container>
             </Navbar>
-          </Col>
-        </Row>
-
-        {/* Checkout steps navs */}
-
-        <Row className="d-none">
-          <Col>
-            <Container>
-              <div className="order-placement-control ">
-                <ul>
-                  <li>
-                    <a href="#">Cart</a>
-                  </li>
-                  <li>
-                    <a href="#">Delivery Address</a>
-                  </li>
-                  <li>
-                    <a href="#">Payment</a>
-                  </li>
-                </ul>
-              </div>
-            </Container>
           </Col>
         </Row>
       </Container>
@@ -420,30 +227,16 @@ function CheckOutPage(props) {
       <Container className="">
         <Row>
           <Col xs={12}>
-            {/* Order summary accordian */}
-            <Accordion>
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>
-                  <p>
-                    Items to Order{" "}
-                    <span
-                      style={{ fontWeight: "bold" }}
-                    >{`RS:${subTotal}`}</span>
-                  </p>
-                </Accordion.Header>
-                <Accordion.Body>
-                  <div className="oreder-summary-container">
-                    <OrderSummary
-                      viewOnly
-                      setAllCartItems={setAllCartItems}
-                      allCartItems={allCartItems}
-                      subTotal={subTotal}
-                    ></OrderSummary>
-                  </div>
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+            <ItemSummaryAccordian title="Items to Order" subTotal={subTotal}>
+              <OrderSummary
+                viewOnly
+                setAllCartItems={setAllCartItems}
+                allCartItems={allCartItems}
+                subTotal={subTotal}
+              ></OrderSummary>
+            </ItemSummaryAccordian>
           </Col>
+
           <Col sm={12} className="oreder-details">
             <Row>
               <Col sm={12}>
@@ -483,22 +276,22 @@ function CheckOutPage(props) {
                               X{" "}
                             </span>
                           </div>
-                        ) : address && address.length > 0 ? (
+                        ) : addresses && addresses.length > 0 ? (
                           <div className="delevery-address">
-                            {address.map((addr) => {
+                            {addresses.map((address) => {
                               return (
                                 <Address
-                                  addr={addr}
-                                  key={addr.id}
-                                  selectAddress={selectAddress}
+                                  address={address}
+                                  key={address.id}
                                   confirmDeliveryAddress={
                                     confirmDeliveryAddress
                                   }
                                   onDeleteAddress={onDeleteAddress}
-                                  handleEditAddress={handleEditAddress}
-                                  setAddress={setAddress}
-                                  address={address}
-                                  setAddnewaddress={setAddnewaddress}
+                                  setShowAddAddressModal={
+                                    setShowAddAddressModal
+                                  }
+                                  setAddresses={setAddresses}
+                                  addresses={addresses}
                                   handleEditAddressCancel={
                                     handleEditAddressCancel
                                   }
@@ -509,19 +302,17 @@ function CheckOutPage(props) {
                         ) : null}
 
                         <div className="addnew-deleveryaddress">
-                          {addnewaddress ? (
-                            <div className="add-address-container">
-                              <AddressForm
-                                setAddnewaddress={setAddnewaddress}
-                              />
-                            </div>
+                          {showAddAddressModal ? (
+                            <AddressForm
+                              setShowAddAddressModal={setShowAddAddressModal}
+                            />
                           ) : (
                             <Button
                               size="sm"
                               variant="outline-dark"
                               className="add-address-button mt-3 mb-4"
                               onClick={() => {
-                                setAddnewaddress(!addnewaddress);
+                                setShowAddAddressModal(!showAddAddressModal);
                               }}
                             >
                               + Add new address
@@ -538,50 +329,12 @@ function CheckOutPage(props) {
                 <CheckoutStep
                   currentStep={currentStep}
                   stepNumber={2}
-                  title={"PAYMENT METHOD"}
+                  title={"PAYMENT METHOD "}
                   active={!confirmPayment}
                   body={
                     <>
                       <div className="payment-info">
-                        <Accordion defaultActiveKey="0">
-                          <Accordion.Item eventKey="0">
-                            <CustomToggle
-                              setPayment={setPayment}
-                              eventKey="0"
-                              value="cash"
-                            >
-                              Cash On Delivery
-                            </CustomToggle>
-                            <Accordion.Body>
-                              {" "}
-                              Pay cash during the delivery of item.
-                            </Accordion.Body>
-                          </Accordion.Item>
-                          <Accordion.Item eventKey="1">
-                            <CustomToggle
-                              setPayment={setPayment}
-                              eventKey="1"
-                              value="card"
-                            >
-                              card on delivery
-                            </CustomToggle>
-                            <Accordion.Body>
-                              Pay by card during the delivery of item.
-                            </Accordion.Body>
-                          </Accordion.Item>
-                          <Accordion.Item eventKey="2">
-                            <CustomToggle
-                              setPayment={setPayment}
-                              eventKey="2"
-                              value="esewa"
-                            >
-                              Esewa
-                            </CustomToggle>
-                            <Accordion.Body>
-                              Make payment using esewa app.
-                            </Accordion.Body>
-                          </Accordion.Item>
-                        </Accordion>
+                        <PaymentAccordian setPayment={setPayment} />
                       </div>
                       <div className="age-confirmation">
                         <Form.Group
@@ -590,7 +343,6 @@ function CheckOutPage(props) {
                         >
                           <Form.Check
                             onChange={(e) => {
-                              //console.log(e.target.checked);
                               if (e.target.checked) {
                                 setAgeConfirmation(true);
                               } else {
@@ -606,7 +358,6 @@ function CheckOutPage(props) {
                   }
                 ></CheckoutStep>
               </Col>
-              <Col xs={12}></Col>
               <Col xs={12}>
                 <div className={`checkout-controls-btn-container`}>
                   <Button
@@ -644,15 +395,7 @@ function CheckOutPage(props) {
                 </div>
               </Col>
               <Col>
-                <div className="placenotdelivered">
-                  <h5>Place we dont deliver</h5>
-                  <p>1. Outside Jhapa, morang</p>
-                  <p>2. Outside of mechi border</p>
-                </div>
-                <div className="placenotdelivered">
-                  <h5>place we charge extra for deliver</h5>
-                  <p>1. Outside birtamode , sanishare , charali</p>
-                </div>
+                <CheckoutFooter />
               </Col>
             </Row>
           </Col>

@@ -14,6 +14,7 @@ import "./style.css";
 import ProductCollage from "../../components/UI/ProdutcCollage";
 import CommentCarouusel from "../../components/UI/CommentCarousel";
 import Toastmessage from "../../components/UI/ToastMessage";
+import { FormControl, InputGroup } from "react-bootstrap";
 
 const HomePage = (props) => {
   const [currentProduct, setCurrentProduct] = useState(null);
@@ -53,6 +54,7 @@ const HomePage = (props) => {
   return (
     <div id="homepage" className="homepage">
       <Layout {...props}>
+        
         <Toastmessage
           show={showToast}
           onClose={toggleShowToast}

@@ -4,48 +4,16 @@ import { productConstaints } from "./constants";
 //v1.category based product fetch.
 export const getproductBySlug = (slug) => {
   return async (dispatch) => {
-    //Fetch all product which lies under same category slug. Based on Category slug -- used in categry list page.
-    // const res = await axiosInstance.get(`/products/${slug}`);
-    // if (res.status === 200) {
-    //   dispatch({
-    //     type: productConstaints.GET_PRODUCTS_BY_SLUG,
-    //     payload: res.data,
-    //   });
-    // } else {
-    //   console.log("nothing found");
-    //   //error handlling
-    // }
     const res = await axiosInstance.get(`/products/${slug}`);
-
     if (res.status === 200) {
-      console.log("result passed");
-      console.log({ res });
+      console.log("product action - get by slug");
       dispatch({
         type: productConstaints.GET_PRODUCTS_BY_SLUG,
         payload: res.data,
       });
     } else {
       console.log("nothing found");
-      //error handlling
     }
-  };
-};
-//v2. getproductbyslug --alsoo fetch the children category product.
-
-export const getproductBySlugIncludeChildrenCategory = (slug) => {
-  //This function return product based on category and also check for product in children category.
-  return async (dispatch) => {
-    // const res = await axiosInstance.get(`/products/${slug}`);
-    // console.log({ res });
-    // if (res.status === 200) {
-    //   dispatch({
-    //     type: productConstaints.GET_PRODUCTS_BY_SLUG,
-    //     payload: res.data,
-    //   });
-    // } else {
-    //   console.log("nothing found");
-    //   //error handlling
-    // }
   };
 };
 
