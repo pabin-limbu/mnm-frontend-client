@@ -43,7 +43,7 @@ function ItemCards(props) {
 
   return (
     <Card>
-      <Link to={`/${item.category.slug}/${item._id}/`}>
+      <Link to={`/product/${item.category.slug}/${item._id}/`}>
         <Card.Img
           variant="top"
           src={generatePublicUrl(item.productPictures[0].img)}

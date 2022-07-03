@@ -33,7 +33,9 @@ const MenuHeader = () => {
           {category.parentId ? (
             category.children.length > 0 ? (
               <div className="cat-title-with-child d-flex justify-content-between">
-                <Link to={`/${category.slug}?categoryId=${category._id}`}>
+                <Link
+                  to={`/product/${category.slug}?categoryId=${category._id}`}
+                >
                   {category.name}
                 </Link>
                 <IconContext.Provider
@@ -46,13 +48,13 @@ const MenuHeader = () => {
                 </IconContext.Provider>
               </div>
             ) : (
-              <Link to={`/${category.slug}?categoryId=${category._id}`}>
+              <Link to={`/product/${category.slug}?categoryId=${category._id}`}>
                 {category.name}
               </Link>
             )
           ) : category.children.length > 0 ? (
             <div className="cat-title-with-child d-flex justify-content-between ">
-              <a href={`/${category.slug}?categoryId=${category._id}`}>
+              <a href={`/product/${category.slug}?categoryId=${category._id}`}>
                 {category.name}
               </a>
               <IconContext.Provider
@@ -62,7 +64,7 @@ const MenuHeader = () => {
               </IconContext.Provider>
             </div>
           ) : (
-            <Link to={`/${category.slug}?categoryId=${category._id}`}>
+            <Link to={`/product/${category.slug}?categoryId=${category._id}`}>
               {" "}
               {category.name}
             </Link>

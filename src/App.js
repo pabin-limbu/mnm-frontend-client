@@ -31,20 +31,21 @@ function App() {
           <Route path="/" exact component={HomePage}></Route>
           <Route path="/cart" exact component={CartPage}></Route>
           <Route path="/checkout" exact component={CheckOutPage}></Route>
-          {/* <Route
+
+          <Route
             path="/success-order"
             exact
             component={SuccessCheckoutSummary}
-          ></Route> */}
-          <Route
-            path="/product/:slug/:id/"
-            exact
-            component={ProductDetailsPage}
           ></Route>
           <Route
             path="/product/:slug"
             exact
             component={ProductListPage}
+          ></Route>
+          <Route
+            path="/product/:slug/:id/"
+            exact
+            component={ProductDetailsPage}
           ></Route>
         </Switch>
       </Router>

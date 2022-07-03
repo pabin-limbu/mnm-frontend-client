@@ -65,7 +65,7 @@ const SideNavBar = () => {
                   "subnav-list-title d-flex justify-content-between collapsible"
                 }
               >
-                <a href={`/${category.slug}`}>{category.name}</a>
+                <a href={`/product/${category.slug}`}>{category.name}</a>
 
                 <Button
                   name={category._id}
@@ -83,7 +83,7 @@ const SideNavBar = () => {
               </div>
             ) : (
               //Condition 2
-              <a href={`/${category.slug}`}> {category.name}</a>
+              <a href={`/product/${category.slug}`}>{category.name}</a>
             )
           ) : //condition 1
           category.children.length > 0 ? ( //condition 3
@@ -92,7 +92,7 @@ const SideNavBar = () => {
                 "subnav-list-title d-flex justify-content-between collapsible"
               }
             >
-              <a href={`/${category.slug}`}>{category.name}</a>
+              <a href={`/product/${category.slug}`}>{category.name}</a>
               <Button
                 name={category._id}
                 className="btn-collapse"

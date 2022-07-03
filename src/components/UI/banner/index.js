@@ -70,8 +70,8 @@ function Banner({ bannerList }) {
                   <Link
                     to={
                       bannerList[currentItemIndex].linkType == "category"
-                        ? `/${bannerList[currentItemIndex].slug}`
-                        : `/${bannerList[currentItemIndex].category.slug}/${bannerList[currentItemIndex].slugId}`
+                        ? `/product/${bannerList[currentItemIndex].slug}`
+                        : `/product/${bannerList[currentItemIndex].category.slug}/${bannerList[currentItemIndex].slugId}`
                     }
                   >
                     <Card.Img
