@@ -53,8 +53,8 @@ const Header = (props) => {
   return (
     <div className="header-wrapper">
       <Navbar className="main-header  d-lg-flex justify-content-end d-none ">
-        <Link to="#">About</Link>
-        <Link to="#">Contact us</Link>
+        <Link to="/aboutus">About</Link>
+        <Link to="/contactus">Contact us</Link>
         <Link to="#">Login / Register</Link>
         <div></div>
 
@@ -71,7 +71,10 @@ const Header = (props) => {
           </button>
         </IconContext.Provider>
       </Navbar>
-      <Container fluid className={`header-menu-wrapper pt-sm-2 ${""}`}>
+      <Container
+        fluid
+        className={`header-menu-wrapper pt-sm-2 ${sticky} w-90`}
+      >
         <Row className="d-flex">
           <Col xs={6} sm={4} md={2}>
             {" "}
@@ -82,6 +85,7 @@ const Header = (props) => {
                 alt="React Bootstrap logo"
                 height="55"
                 style={{ maxWidth: "100%", height: "auto" }}
+                loading="lazy"
               />
             </Navbar.Brand>
           </Col>

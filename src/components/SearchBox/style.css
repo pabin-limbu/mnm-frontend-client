@@ -18,7 +18,7 @@
 
 .searchBtnClose {
   color: white;
-  position: absolute;
+  position: fixed;
   top: 0px;
   right: 10px;
   font-size: 30px;
@@ -62,7 +62,8 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  position: fixed;
 }
 
 @keyframes slideToTop {

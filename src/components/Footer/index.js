@@ -29,7 +29,7 @@ const Footer = () => {
         {categoryList.map((category) => {
           return (
             <li key={category._id}>
-              <a href={category.slug}>
+              <a href={`/product/${category.slug}`}>
                 <IoChevronForward className="footer-listarrow"></IoChevronForward>
                 <span className="small-anchor"> {category.name}</span>
               </a>{" "}

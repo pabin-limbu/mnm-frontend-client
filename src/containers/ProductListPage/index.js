@@ -124,11 +124,6 @@ const ProductListPage = (props) => {
     setShowProductViewModal(false);
   };
 
-  // return (
-  //   <>
-  //     <div className="">Product List page</div>
-  //   </>
-  // );
 
   return (
     <Layout>

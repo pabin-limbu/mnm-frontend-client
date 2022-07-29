@@ -5,7 +5,7 @@ import "./style.css";
 
 function ProductCollage(props) {
   const onHandleViewAll = () => {
-    props.history.push(`/${props.carouselCategorySlug}`);
+    props.history.push(`/product/${props.carouselCategorySlug}`);
   };
 
   const {

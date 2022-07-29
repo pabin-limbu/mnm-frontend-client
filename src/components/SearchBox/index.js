@@ -39,11 +39,11 @@ function SearchBox(props) {
     if (show) {
       document.getElementById("search-overlay").classList.toggle("active");
       document.getElementsByTagName("body")[0].style.overflow = "hidden";
-      document.querySelector("html").style.marginRight = "17px";
+      // document.querySelector("html").style.marginRight = "17px";
     } else {
       document.getElementById("search-overlay").classList.remove("active");
       document.getElementsByTagName("body")[0].style.overflowY = "scroll";
-      document.querySelector("html").style.marginRight = "0px";
+      // document.querySelector("html").style.marginRight = "0px";
     }
   }, [show]);
 
@@ -113,7 +113,7 @@ function SearchBox(props) {
             {filteredItem.map((item) => {
               return (
                 <li key={""} className="filter_listItem">
-                  <a href={`/${item.slug}/${item._id}/`}>
+                  <a href={`/product/${item.slug}/${item._id}/`}>
                     <Row>
                       <Col xs={2}>
                         <img

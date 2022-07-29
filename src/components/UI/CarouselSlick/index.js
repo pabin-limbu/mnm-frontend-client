@@ -55,9 +55,9 @@ function CarouselSlick(props) {
 
   const onHandleViewAll = () => {
     if (featured) {
-      props.history.push(`/featured`, { state: "pabin" });
+      props.history.push(`/product/featured`, { state: "pabin" });
     } else {
-      props.history.push(`/${carouselCategorySlug}`);
+      props.history.push(`/product/${carouselCategorySlug}`);
     }
   };
   return (

@@ -18,12 +18,15 @@ import CarouselSlick from "../../components/UI/CarouselSlick";
 import "./style.css";
 import ProductViewModal from "../../components/UI/modal/productViewModal";
 import { generatePublicUrl } from "../../urlConfig";
+import Toastmessage from "../../components/UI/ToastMessage";
+import { addToCart } from "../../store/actions";
 
 function ProductDetailsPage(props) {
   const [quantity, setQuantity] = useState(0);
   const [products, setProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [showProductViewModal, setShowProductViewModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const product = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
@@ -41,10 +44,14 @@ function ProductDetailsPage(props) {
   // get related product by category.
   useEffect(() => {
     if (Object.keys(product.productcurrent).length !== 0) {
+      //currentproduct set
+      setCurrentProduct(product.productcurrent);
+      //fetch related product using
       const payload = props.match.params.slug;
       dispatch(getproductBySlug(payload));
     }
   }, [product.productcurrent]);
+
   // get products as related product.
   useEffect(() => {
     const realatedProducts = product.products;
@@ -62,9 +69,36 @@ function ProductDetailsPage(props) {
     setShowProductViewModal(false);
   };
 
+  const handleAddToCart = () => {
+    console.log("handling add to cart");
+
+    const orderItem = {
+      _id: currentProduct._id,
+      name: currentProduct.name,
+      category: currentProduct.category,
+      price: currentProduct.price,
+      quantity: currentProduct.quantity,
+      productPictures: currentProduct.productPictures,
+    };
+
+    dispatch(addToCart(orderItem, quantity)).then((res) => {
+      console.log(res);
+      setShowToast(true);
+    });
+  };
+
+  const toggleShow = () => {
+    setShowToast(!showToast);
+  };
+
   return (
     <div>
       <Layout {...props}>
+        <Toastmessage
+          show={showToast}
+          onClose={toggleShow}
+          delay={2000}
+        ></Toastmessage>
         <Row>
           <Col xs={12} md={6}>
             {/* product image */}
@@ -123,7 +157,10 @@ function ProductDetailsPage(props) {
                 </InputGroup>
 
                 <div className="productdetails-addtocart-container">
-                  <Button className="productdetails-btnaddtocart">
+                  <Button
+                    className="productdetails-btnaddtocart"
+                    onClick={handleAddToCart}
+                  >
                     Add to cart
                   </Button>
                 </div>
@@ -134,7 +171,6 @@ function ProductDetailsPage(props) {
             </Container>
           </Col>
 
-          {console.log(products)}
           <Col xs={12}>
             {/* Related product */}
             <div>

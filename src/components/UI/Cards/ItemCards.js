@@ -47,6 +47,7 @@ function ItemCards(props) {
         <Card.Img
           variant="top"
           src={generatePublicUrl(item.productPictures[0].img)}
+          loading="lazy"
         />
       </Link>
 

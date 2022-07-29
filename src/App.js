@@ -11,6 +11,8 @@ import { getInitialData } from "./store/actions/initialdata.actions";
 import CheckOutPage from "./containers/CheckOutPage";
 import ProductDetailsPage from "./containers/PrdouctDetailsPage";
 import SuccessCheckoutSummary from "./containers/SuccessCheckoutSummary";
+import ContactUs from "./containers/ContactUs";
+import AboutUs from "./containers/AboutUs";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +31,8 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact component={HomePage}></Route>
+          <Route path="/aboutus" exact component={AboutUs}></Route>
+          <Route path="/contactus" exact component={ContactUs}></Route>
           <Route path="/cart" exact component={CartPage}></Route>
           <Route path="/checkout" exact component={CheckOutPage}></Route>
 

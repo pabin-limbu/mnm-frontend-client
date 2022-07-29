@@ -1,0 +1,68 @@
+.about-breadCrumb {
+  background-color: rgba(136, 176, 75, 0.8);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.about-breadCrumb p:first-child a {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0;
+  text-decoration: none;
+}
+.about-breadCrumb p:nth-child(2) {
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
+.about-sections {
+  /* background-image: url(../../uploads/mnm-about.jpg); */
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-color: rgba(136, 176, 75, 0.7);
+  object-fit: contain;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.sectionOne,
+.sectionTwo {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  margin-top: 30px;
+}
+
+.sectionOne,
+.sectionTwo > p {
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+.mnm-slogan p {
+  font-family: Brush Script MT, Brush Script Std, cursive;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+}
+.mnm-slogan p span {
+  font-family: Brush Script MT, Brush Script Std, cursive;
+  font-size: 100px;
+}
+.about-sections > .row {
+  margin: 0;
+}
+.sectionTwo ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.sectionTwo ul li {
+  color: white;
+  font-weight: bold;
+}
+.sectionTwo > h1 {
+  color: white;
+}

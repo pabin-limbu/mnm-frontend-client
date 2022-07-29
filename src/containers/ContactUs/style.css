@@ -1,0 +1,39 @@
+.visit-breadCrumb {
+  background-color: rgba(239, 192, 80, 1);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.visit-breadCrumb p:first-child a {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0;
+  text-decoration: none;
+}
+.visit-breadCrumb p:nth-child(2) {
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
+.visit {
+  text-align: center;
+}
+.visit h3 {
+  margin-top: 20px;
+  font-weight: bold;
+}
+.visit ul {
+  background-color: wheat;
+  list-style-type: none;
+  padding: 20px 0 20px 10px;
+  margin-bottom: 40px !important;
+  text-align: center;
+}
+
+.visit ul li a {
+  text-decoration: none;
+  font-weight: bold;
+}

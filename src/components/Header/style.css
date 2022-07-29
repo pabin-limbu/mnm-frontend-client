@@ -51,6 +51,8 @@ p {
 /* TEST END */
 
 .header-menu-wrapper.sticky {
+  display: block;
+  box-sizing: border-box;
   position: fixed;
   left: 0;
   top: 0;
