@@ -53,7 +53,13 @@ const HomePage = (props) => {
   const toggleShowToast = () => setShowToast(!showToast);
   return (
     <div id="homepage" className="homepage">
-   
+      <Navbar className="topHomeHeader d-flex flex-column">
+        <p>Delivery hour 9am to 12am</p>
+        <p>
+          {" "}
+          Phone: <a href="tel:9840058472">9840058472</a>{" "}
+        </p>
+      </Navbar>
       <Layout {...props}>
         <Toastmessage
           show={showToast}
