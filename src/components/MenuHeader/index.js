@@ -9,32 +9,54 @@ import "./style.css";
 import { IconContext } from "react-icons";
 const MenuHeader = () => {
   const [showNav, setShowNav] = useState(false);
+  const categoryStore = useSelector((state) => state.category);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getAllCategory());
   }, []);
-
-  const category = useSelector((state) => state.category);
 
   const showNavBar = () => {
     setShowNav(true);
   };
   const showSubMenu = () => {
-    console.log("hiiiiiii");
+    // console.log("hiiiiiii");
   };
 
-  // /**RENDER CATEGORY */
-  const renderCategories = (categories) => {
-    let categoryList = [];
+  //FOR URL . if parent mention parent also.
+  function extractParentName(items, curretnItem) {
+    let name = "";
+
+    function getName(items, curretnItem) {
+      if (!curretnItem.parentId) return;
+      let selectedParent = items.find(
+        (item) => item._id === curretnItem.parentId
+      );
+      let parentName = String(selectedParent.slug).concat("/");
+      name = parentName + name;
+      if (selectedParent.parentId) {
+        getName(items, selectedParent);
+      }
+    }
+    getName(items, curretnItem);
+
+    return name;
+  }
+
+  /**RENDER CATEGORY */
+  const renderCategories = (categories, categoryList) => {
+    let categoryListArray = [];
     for (let category of categories) {
-      categoryList.push(
+      categoryListArray.push(
         <li key={category._id}>
           {category.parentId ? (
             category.children.length > 0 ? (
               <div className="cat-title-with-child d-flex justify-content-between">
                 <Link
-                  to={`/product/${category.slug}?categoryId=${category._id}`}
+                  to={`/shop/${extractParentName(categoryList, category)}${
+                    category.slug
+                  }`}
                 >
                   {category.name}
                 </Link>
@@ -48,15 +70,23 @@ const MenuHeader = () => {
                 </IconContext.Provider>
               </div>
             ) : (
-              <Link to={`/product/${category.slug}?categoryId=${category._id}`}>
+              <Link
+                to={`/shop/${extractParentName(categoryList, category)}${
+                  category.slug
+                }`}
+              >
                 {category.name}
               </Link>
             )
           ) : category.children.length > 0 ? (
             <div className="cat-title-with-child d-flex justify-content-between ">
-              <a href={`/product/${category.slug}?categoryId=${category._id}`}>
+              <Link
+                to={`/shop/${extractParentName(categoryList, category)}${
+                  category.slug
+                }`}
+              >
                 {category.name}
-              </a>
+              </Link>
               <IconContext.Provider
                 value={{ color: "gray", className: "", size: "1em" }}
               >
@@ -64,28 +94,37 @@ const MenuHeader = () => {
               </IconContext.Provider>
             </div>
           ) : (
-            <Link to={`/product/${category.slug}?categoryId=${category._id}`}>
+            <Link
+              to={`/shop/${extractParentName(categoryList, category)}${
+                category.slug
+              }`}
+            >
               {" "}
               {category.name}
             </Link>
           )}
           {category.children.length > 0 ? (
-            <ul>{renderCategories(category.children)}</ul>
+            <ul>{renderCategories(category.children, categoryList)}</ul>
           ) : null}
         </li>
       );
     }
-    return categoryList;
+    return categoryListArray;
   };
   /**RENDER CATEGORY END */
 
   return (
     <Container fluid className="menu-header-container pr-0">
-      <SideNavbar categories={category} />
+      <SideNavbar categories={categoryStore} />
+      {/* <p>{JSON.stringify(categoryStore.categoriesList)}</p> */}
       <div className="menu-header d-lg-block ">
         <ul className="d-flex flex-wrap justify-content-end  align-content-center ">
-          {category.categories.length > 0
-            ? renderCategories(category.categories)
+          {categoryStore.categories.length > 0 &&
+          categoryStore.categoriesList.length > 0
+            ? renderCategories(
+                categoryStore.categories,
+                categoryStore.categoriesList
+              )
             : null}
         </ul>
       </div>

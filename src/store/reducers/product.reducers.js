@@ -7,16 +7,30 @@ const initState = {
   featuredProduct: [],
   featuredCategoryWithProduct: [],
   relatedProduct: [],
+  productsLoading: false,
+  error: "",
 };
 export default (state = initState, action) => {
   console.log(action.type);
   switch (action.type) {
-    case productConstaints.GET_PRODUCTS_BY_SLUG:
+    case productConstaints.GET_PRODUCTS_BY_SLUG_REQUEST:
+      state = { ...state, productsLoading: true, error: "" };
+      break;
+    case productConstaints.GET_PRODUCTS_BY_SLUG_SUCCESS:
       state = {
         ...state,
         products: action.payload.products,
+        productsLoading: false,
+        error: "",
       };
       break;
+    case productConstaints.GET_PRODUCTS_BY_SLUG_FAILURE:
+      state = {
+        ...state,
+        productsLoading: false,
+        error: action.payload.response.data.message,
+      };
+
     case productConstaints.GET_PRODUCTS_BY_ID:
       state = { ...state, productcurrent: action.payload.data };
       break;

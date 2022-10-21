@@ -9,6 +9,9 @@
   font-weight: bold;
   font-size: 11px;
 }
+.home-banner-container {
+  min-height: 200px;
+}
 
 /* .slick-next {
 }

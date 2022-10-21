@@ -4,15 +4,23 @@ import { productConstaints } from "./constants";
 //v1.category based product fetch.
 export const getproductBySlug = (slug) => {
   return async (dispatch) => {
-    const res = await axiosInstance.get(`/products/${slug}`);
-    if (res.status === 200) {
-      console.log("product action - get by slug");
+    dispatch({ type: productConstaints.GET_PRODUCTS_BY_SLUG_REQUEST });
+    try {
+      const res = await axiosInstance.get(`/products/${slug}`);
+      console.log({ res });
+      if (res.status === 200) {
+        console.log("product action - get by slug");
+        dispatch({
+          type: productConstaints.GET_PRODUCTS_BY_SLUG_SUCCESS,
+          payload: res.data,
+        });
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
       dispatch({
-        type: productConstaints.GET_PRODUCTS_BY_SLUG,
-        payload: res.data,
+        type: productConstaints.GET_PRODUCTS_BY_SLUG_FAILURE,
+        payload: error,
       });
-    } else {
-      console.log("nothing found");
     }
   };
 };

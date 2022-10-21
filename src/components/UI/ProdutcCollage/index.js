@@ -20,7 +20,7 @@ function ProductCollage(props) {
       <div>
         <div className="d-flex pt-4 justify-content-center">
           <h6
-            className=" d-flex college-title-name align-items-center"
+            className=" d-flex college-title-name align-items-center pt-3 pb-4"
             style={{ width: "100%" }}
           >
             <b></b>
@@ -49,7 +49,7 @@ function ProductCollage(props) {
           <Button
             size="sm"
             variant="outline-warning"
-            className="float-right mt-2"
+            className="float-right mt-4 btn-viewall"
             onClick={() => {
               onHandleViewAll();
             }}

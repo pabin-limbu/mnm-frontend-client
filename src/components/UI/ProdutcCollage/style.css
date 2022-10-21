@@ -1,6 +1,3 @@
-.product-college-cardcolumn > .card {
-  /* width: 200px; */
-}
 .college-title-name {
   font-size: 20px;
   font-weight: bold;
@@ -14,4 +11,8 @@ b {
   height: 2px;
   opacity: 0.1;
   background-color: currentColor;
+}
+
+.btn-viewall {
+  font-weight: bold !important;
 }

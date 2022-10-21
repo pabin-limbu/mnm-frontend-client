@@ -62,11 +62,11 @@ function CarouselSlick(props) {
   };
   return (
     <Container id="carouselSlick">
-      <div className="d-flex justify-content-between mt-4">
-        <h4 className="d-block carousel-title-name">
+      <div className="d-flex justify-content-between mt-3 mt-md-5 mb-3 ">
+        <h5 className="d-block carousel-title-name ">
           {" "}
           {carouselCategoryname}{" "}
-        </h4>
+        </h5>
         <Button
           size="sm"
           variant="outline-warning"
@@ -80,7 +80,7 @@ function CarouselSlick(props) {
         </Button>
       </div>
 
-      <Slider className="carousel-slider" {...settings}>
+      <Slider className="carousel-slider " {...settings}>
         {products.length >= 0
           ? products.map((item) => {
               return (

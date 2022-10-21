@@ -10,7 +10,7 @@ function Banner({ bannerList }) {
   const [currentItemIndex2, setcurrentItemIndex2] = useState(0);
 
   var settings = {
-    dots: false,
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -57,7 +57,7 @@ function Banner({ bannerList }) {
     ],
   };
   return (
-    <Container className="banner-container">
+    <Container className="banner-container mb-5 mt-4">
       <Slider className="banner-slider" {...settings}>
         {bannerList && bannerList.length > 0
           ? bannerList.map((banner) => {
@@ -74,10 +74,7 @@ function Banner({ bannerList }) {
                         : `/product/${bannerList[currentItemIndex].category.slug}/${bannerList[currentItemIndex].slugId}`
                     }
                   >
-                    <Card.Img
-                      variant="top"
-                      src={generatePublicUrl(banner.bannerImage)}
-                    />
+                    <img src={generatePublicUrl(banner.bannerImage)} />
                   </Link>
                 </div>
               );

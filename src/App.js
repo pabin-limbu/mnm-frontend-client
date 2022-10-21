@@ -35,17 +35,13 @@ function App() {
           <Route path="/contactus" exact component={ContactUs}></Route>
           <Route path="/cart" exact component={CartPage}></Route>
           <Route path="/checkout" exact component={CheckOutPage}></Route>
-
           <Route
             path="/success-order"
             exact
             component={SuccessCheckoutSummary}
           ></Route>
-          <Route
-            path="/product/:slug"
-            exact
-            component={ProductListPage}
-          ></Route>
+          {/* <Route path="/:slug/" exact component={ProductListPage}></Route> */}
+          <Route path="/shop/:slug" component={ProductListPage}></Route>
           <Route
             path="/product/:slug/:id/"
             exact

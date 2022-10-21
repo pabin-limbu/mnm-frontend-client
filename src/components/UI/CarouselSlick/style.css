@@ -30,7 +30,7 @@
   color: grey;
 }
 .carousel-title-name {
-  font-size: 12px;
+  /* font-size: 12px; */
   font-weight: bold;
   text-transform: capitalize;
 }
